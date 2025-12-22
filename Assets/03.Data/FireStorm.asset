@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08054076bbc3a44686317eb8f9e8800, type: 3}
+  m_Name: FireStorm
+  m_EditorClassIdentifier: 
+  <Description>k__BackingField: Add 3 burn to all enemies.
+  <Mana>k__BackingField: 2
+  <Image>k__BackingField: {fileID: 21300000, guid: 24f92ac9b09d80b4992c1211e8de43a8, type: 3}
+  <MaualTargetEffect>k__BackingField:
+    rid: 1261170674316083297
+  <OtherEffects>k__BackingField:
+  - <TargetMode>k__BackingField:
+      rid: 1261170674316083294
+    <Effect>k__BackingField:
+      rid: 1261170674316083296
+  references:
+    version: 2
+    RefIds:
+    - rid: 1261170674316083294
+      type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1261170674316083296
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 1
+        stackCount: 3
+    - rid: 1261170674316083297
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 1
+        stackCount: 0
