@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/00.Scenes/CharacterBuff.unity
     guid: 78cfb82b55ae9e84f82a929c6e67f823
   - enabled: 1
+    path: Assets/00.Scenes/Map.unity
+    guid: 0d92a8ef1ff760943b3b94b31636e9b2
+  - enabled: 1
     path: Assets/00.Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
