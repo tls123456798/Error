@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -8,6 +9,17 @@ public class HeroSystem : Singleton<HeroSystem>
 {
     // 영웅의 외형 및 UI를 담당하는 HeroView에 대한 참조입니다.
     [field: SerializeField] public HeroView HeroView { get; private set; }
+
+    [Header("Player Gold")]
+    [SerializeField] private int gold = 100; // 초기 골드 설정
+
+    // 재화가 변경되었을 때 UI 등에 알림을 보내기 위한 이벤트
+    public event Action<int> OnGoldChanged;
+
+    /// <summary>
+    /// 현재 보유한 골드 양 (읽기 전용)
+    /// </summary>
+    public int CurrentGold => gold;
 
     /// <summary>
     /// 오브젝트가 활성화될 때 실행됩니다.
@@ -28,6 +40,28 @@ public class HeroSystem : Singleton<HeroSystem>
     {
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyturnPreReaction, ReactionTiming.PRE);
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
+    }
+
+    /// <summary>
+    /// 골드를 추가합니다. (전투 승리 보상 등)
+    /// </summary>
+    public void AddGold(int amount)
+    {
+        gold += amount;
+        Debug.Log($"골드 획득: {amount} / 현재 골드: {gold}");
+        OnGoldChanged?.Invoke(gold); // 구독 중인 UI가 있다면 업데이트 알림
+    }
+    public bool SpendGold(int amount)
+    {
+        if(gold >= amount)
+        {
+            gold -= amount;
+            OnGoldChanged?.Invoke(gold);
+            return true;
+        }
+
+        Debug.Log("골드가 부족합니다.");
+        return false;
     }
 
     /// <summary>

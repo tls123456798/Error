@@ -11,18 +11,35 @@ public class HeroData : ScriptableObject
     // [field: SerializeField] 방식은 변수를 private하게 보호하면서도
     // 유니티 인스펙터 창에서 값을 수정할 수 있게 해주는 깔끔한 방식입니다.
 
-    /// <summary>
-    /// 영웅의 외형을 나타내느 스프라이트 이미지입니다.
-    /// </summary>
+    [Header("Visual & Basic Info")]
+    [field: SerializeField] public string HeroName { get; private set; }
     [field: SerializeField] public Sprite Image { get; private set; }
-
-    /// <summary>
-    /// 영웅의 기본 체력 수치 입니다.
-    /// </summary>
-    [field: SerializeField] public int Health {  get; private set; }
-
-    /// <summary>
-    /// 영웅이 기본적으로 소지하고 시작하는 카드들의 목록입니다.
-    /// </summary>
     [field: SerializeField] public List<CardData> Deck {  get; private set; }
+
+    [Header("Stats (Permanent)")]
+    [SerializeField] private int maxHealth; // 인스펙터에서 설정할 최대 체력
+    public int MaxHealth => maxHealth;
+
+    [Header("Status (Save Data)")]
+    // 게임 중 실시간으로 변하는 값들입니다.
+    public int currentHealth;
+    public int gold;
+
+    /// <summary>
+    /// 게임을 처음 시작할 때 데이터를 초기 상태로 되돌립니다.
+    /// CharacterBuff 씬이나 타이틀 화면에서 호출하면 좋습니다.
+    /// </summary>
+    public void Initialize()
+    {
+        currentHealth = maxHealth;
+        gold = 100; // 초기 자금
+        Debug.Log("영웅 데이터 초기화 완료)");
+    }
+
+    public void UpdateHealth(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+    }
+  
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa8bd63549c54b4cbd2ec2241b66371, type: 3}
   m_Name: DefaultHero
   m_EditorClassIdentifier: 
+  <HeroName>k__BackingField: Unknown
   <Image>k__BackingField: {fileID: 21300000, guid: 2abd26cb80ac49e499762ce8812af0e8, type: 3}
-  <Health>k__BackingField: 44
   <Deck>k__BackingField:
   - {fileID: 11400000, guid: 43043b90c29f3ed4b870422669988904, type: 2}
   - {fileID: 11400000, guid: 43043b90c29f3ed4b870422669988904, type: 2}
@@ -33,3 +33,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 80f9c451f00e44540a96ce5ebd24b4fd, type: 2}
   - {fileID: 11400000, guid: 80f9c451f00e44540a96ce5ebd24b4fd, type: 2}
   - {fileID: 11400000, guid: 80f9c451f00e44540a96ce5ebd24b4fd, type: 2}
+  maxHealth: 80
+  currentHealth: 80
+  gold: 100

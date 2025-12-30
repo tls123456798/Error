@@ -14,8 +14,12 @@ public class EnemySystem : Singleton<EnemySystem>
     // 외부에서 적 리스트를 조회할 수 있도록 public 프로퍼티로 노출 (읽기 전용)
     public List<EnemyView> Enemies => enemyBoardView.EnemyViews;
 
-    // 이벤트 연결 (이벤트 주도 설계)
+    // 승리 패널을 제어하기 위해 추가
+    [Header("Victory UI Settings")]
+    [SerializeField] private GameObject victoryPanel;
 
+
+    // 이벤트 연결 (이벤트 주도 설계)
     void OnEnable()
     {
         // ActionSystem에 특정 행동(GA: Game Action)이 들어오면 실행할 함수(Performer)를 연결합니다.
@@ -90,5 +94,35 @@ public class EnemySystem : Singleton<EnemySystem>
     {
         // RemoveEnemy가 코루틴(IEnumerator)일 경우 yield return으로 끝날 때까지 기다림
         yield return enemyBoardView.RemoveEnemy(killEnemyGA.EnemyView);
+
+        CheckBattleOver();
+    }
+
+    /// <summary>
+    /// 실제 리스트의 개수를 확인하여 승리 판정
+    /// </summary>
+    public void CheckBattleOver()
+    {
+        // 리스트가 null이 아니고, 살아있는 적의 수가 0일 때 승리
+        if(Enemies != null && Enemies.Count == 0)
+        {
+            OnVictory();
+        }
+    }
+
+    /// <summary>
+    /// 승리 패널 활성화
+    /// </summary>
+    private void OnVictory()
+    {
+        int reward = UnityEngine.Random.Range(20, 40); // 랜덤 보상
+        HeroSystem.Instance.AddGold(reward); // 골드 추가
+
+        if(victoryPanel != null)
+        {
+            victoryPanel.SetActive(true);
+
+            Debug.Log("전투 승리! 보상 화면으로 이동 준비");
+        }
     }
 }
