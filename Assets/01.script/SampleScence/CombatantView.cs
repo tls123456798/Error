@@ -41,7 +41,7 @@ public class CombatantView : MonoBehaviour
     }
 
     /// <summary>
-    /// 캐릭터가 피해를 입었을 때 호출됩니다. 바어력 계산 로직을 포함합니다.
+    /// 캐릭터가 피해를 입었을 때 호출됩니다. 방어력 계산 로직을 포함합니다.
     /// </summary>
     /// <param name="damageAmount">입힐 데미지 수치</param>
     public void Damage(int damageAmount)

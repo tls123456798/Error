@@ -2798,7 +2798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <HeroView>k__BackingField: {fileID: 1773867486068067065}
-  gold: 100
+  heroData: {fileID: 11400000, guid: 123fc4819333f6a43b6d0c8172d71729, type: 2}
 --- !u!1 &1479018606
 GameObject:
   m_ObjectHideFlags: 0
@@ -3781,6 +3781,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 641987461}
     m_Modifications:
+    - target: {fileID: 217694469988132923, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: hpText
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1847063325973775358, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6

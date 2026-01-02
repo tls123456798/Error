@@ -25,6 +25,12 @@ public class HeroView : CombatantView
         // 현재 데이터에 맞춰 HP UI 업데이트
         UpdateHPUI(heroData.currentHealth, heroData.MaxHealth);
     }
+
+    public void OnDamaged(int damage)
+    {
+        HeroSystem.Instance.UpdateHealth(-damage);
+    }
+
     public void UpdateHPUI(int current, int max)
     {
         if(hpSlider != null)
@@ -34,7 +40,7 @@ public class HeroView : CombatantView
         }
         if(hpText != null)
         {
-            hpText.text = $"{current} / {max}";
+            hpText.text = $"HP:{current}";
         }
     }
 }

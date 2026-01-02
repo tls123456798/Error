@@ -10,16 +10,12 @@ public class HeroSystem : Singleton<HeroSystem>
     // 영웅의 외형 및 UI를 담당하는 HeroView에 대한 참조입니다.
     [field: SerializeField] public HeroView HeroView { get; private set; }
 
-    [Header("Player Gold")]
-    [SerializeField] private int gold = 100; // 초기 골드 설정
+    [Header("Hero Data Reference")]
+    [SerializeField] private HeroData heroData;
 
     // 재화가 변경되었을 때 UI 등에 알림을 보내기 위한 이벤트
-    public event Action<int> OnGoldChanged;
-
-    /// <summary>
-    /// 현재 보유한 골드 양 (읽기 전용)
-    /// </summary>
-    public int CurrentGold => gold;
+    public static event Action<int, int> OnHPChangedStatic;
+    public static event Action<int> OnGoldChangedStatic;
 
     /// <summary>
     /// 오브젝트가 활성화될 때 실행됩니다.
@@ -41,37 +37,69 @@ public class HeroSystem : Singleton<HeroSystem>
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyturnPreReaction, ReactionTiming.PRE);
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
     }
-
-    /// <summary>
-    /// 골드를 추가합니다. (전투 승리 보상 등)
-    /// </summary>
-    public void AddGold(int amount)
+    public void Setup(HeroData data)
     {
-        gold += amount;
-        Debug.Log($"골드 획득: {amount} / 현재 골드: {gold}");
-        OnGoldChanged?.Invoke(gold); // 구독 중인 UI가 있다면 업데이트 알림
-    }
-    public bool SpendGold(int amount)
-    {
-        if(gold >= amount)
+        this.heroData = data; // 전달받은 데이터 에셋을 시스템에 등록
+        
+        if(HeroView != null)
         {
-            gold -= amount;
-            OnGoldChanged?.Invoke(gold);
-            return true;
+            HeroView.Setup(heroData);
+        }
+    }
+
+    #region 체력 및 골드 관리 로직 (Data Asset 직접 수정)
+
+    // 외부(RestSystem 등)에서 최대 체력을 참조하기 위한 도우미 함수
+    public int GetMaxHealth() => heroData != null ? heroData.MaxHealth : 0;
+
+    // 영우의 체력을 변화시키고 데이터 에셋에 저장합니다.
+    public void UpdateHealth(int amount)
+    {
+        Debug.Log($"[HeroSystem] 체력 변경 시도: {amount}");
+
+        if(heroData == null)
+        {
+            return;
         }
 
+        // 실제 데이터 에셋 값 수정
+        heroData.currentHealth += amount;
+        heroData.currentHealth = Mathf.Clamp(heroData.currentHealth, 0, heroData.MaxHealth);
+
+        // 캐릭터 머리 위 UI(HeroView) 업데이트
+        if(HeroView != null)
+        {
+            HeroView.UpdateHPUI(heroData.currentHealth, heroData.MaxHealth);
+        }
+
+        // 상단 바 등 이벤트를 듣고 있는 UI에 알림
+        OnHPChangedStatic?.Invoke(heroData.currentHealth, heroData.MaxHealth);
+    }
+
+    // 골드를 추가하고 데이터 에셋에 저장합니다.
+    public void AddGold(int amount)
+    {
+        if (heroData == null) return;
+
+        heroData.gold += amount;
+        Debug.Log($"골드 획득: {amount} / 현재 골드: {heroData.gold}");
+        OnGoldChangedStatic?.Invoke(heroData.gold);
+    }
+
+    // 골드를 소비합니다.
+    public bool SpendGold(int amount)
+    {
+        if(heroData != null && heroData.gold >= amount)
+        {
+            heroData.gold -= amount;
+            OnGoldChangedStatic?.Invoke(heroData.gold);
+            return true;
+        }
         Debug.Log("골드가 부족합니다.");
         return false;
     }
 
-    /// <summary>
-    /// 외부(예: 배틀 매니저)에서 HeroData를 전달받아 영웅의 초기 설정을 진행합니다.
-    /// </summary>
-    /// <param name="heroData">설정할 영웅의 데이터 에셋</param>
-    public void Setup(HeroData heroData)
-    {
-        HeroView.Setup(heroData);
-    }
+    #endregion
 
     /// <summary>
     /// 적의 턴이 시작되기 직전에 실행되는 로직입니다.
