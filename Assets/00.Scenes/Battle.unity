@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Gold: 100'
+  m_text: Prise Gold
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -402,6 +402,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: Map
+--- !u!114 &77182842 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3097759440789409893, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+  m_PrefabInstance: {fileID: 1773867486068067063}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &81351652
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBoardView: {fileID: 1419272334}
   victoryPanel: {fileID: 850373844}
+  rewardGoldButton: {fileID: 705047629}
 --- !u!1 &126728394
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,7 +1660,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 705047632}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 81351654}
+        m_TargetAssemblyTypeName: EnemySystem, Assembly-CSharp
+        m_MethodName: ClaimGoldReward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &705047632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3785,6 +3809,22 @@ PrefabInstance:
       propertyPath: hpText
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 217694469988132923, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 77182842}
+    - target: {fileID: 217694469988132923, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: playerName
+      value: 
+      objectReference: {fileID: 2083262792}
+    - target: {fileID: 217694469988132923, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: topGoldText
+      value: 
+      objectReference: {fileID: 2083262790}
+    - target: {fileID: 217694469988132923, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: topHealthText
+      value: 
+      objectReference: {fileID: 2083262791}
     - target: {fileID: 1847063325973775358, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6

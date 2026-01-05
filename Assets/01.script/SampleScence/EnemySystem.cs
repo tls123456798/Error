@@ -18,6 +18,9 @@ public class EnemySystem : Singleton<EnemySystem>
     [Header("Victory UI Settings")]
     [SerializeField] private GameObject victoryPanel;
 
+    private int pendingRewardGold; // 플레이어가 버튼을 누르기 전가지 보관할 골드량
+    [SerializeField] private GameObject rewardGoldButton;
+
 
     // 이벤트 연결 (이벤트 주도 설계)
     void OnEnable()
@@ -115,14 +118,28 @@ public class EnemySystem : Singleton<EnemySystem>
     /// </summary>
     private void OnVictory()
     {
-        int reward = UnityEngine.Random.Range(20, 40); // 랜덤 보상
-        HeroSystem.Instance.AddGold(reward); // 골드 추가
+        // 적(Enemy)를 물리치고 나오는 골드의 양
+        pendingRewardGold = UnityEngine.Random.Range(20, 40);
 
-        if(victoryPanel != null)
+        if(victoryPanel != null )
         {
             victoryPanel.SetActive(true);
+            Debug.Log($"전투 승리! 획득 가능한 골드: {pendingRewardGold}");
+        }
+    }
 
-            Debug.Log("전투 승리! 보상 화면으로 이동 준비");
+    // 보상 버튼(Gold 버튼)을 눌렀을 때 실행될 함수를 새로 만듭니다.
+    public void ClaimGoldReward()
+    {
+        if(pendingRewardGold > 0)
+        {
+            HeroSystem.Instance.AddGold(pendingRewardGold);
+            pendingRewardGold = 0;
+
+            if(rewardGoldButton != null)
+            {
+                rewardGoldButton.SetActive(false);
+            }
         }
     }
 }

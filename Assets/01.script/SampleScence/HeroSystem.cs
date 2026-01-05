@@ -52,7 +52,7 @@ public class HeroSystem : Singleton<HeroSystem>
     // 외부(RestSystem 등)에서 최대 체력을 참조하기 위한 도우미 함수
     public int GetMaxHealth() => heroData != null ? heroData.MaxHealth : 0;
 
-    // 영우의 체력을 변화시키고 데이터 에셋에 저장합니다.
+    // 영웅의 체력을 변화시키고 데이터 에셋에 저장합니다.
     public void UpdateHealth(int amount)
     {
         Debug.Log($"[HeroSystem] 체력 변경 시도: {amount}");
@@ -65,12 +65,6 @@ public class HeroSystem : Singleton<HeroSystem>
         // 실제 데이터 에셋 값 수정
         heroData.currentHealth += amount;
         heroData.currentHealth = Mathf.Clamp(heroData.currentHealth, 0, heroData.MaxHealth);
-
-        // 캐릭터 머리 위 UI(HeroView) 업데이트
-        if(HeroView != null)
-        {
-            HeroView.UpdateHPUI(heroData.currentHealth, heroData.MaxHealth);
-        }
 
         // 상단 바 등 이벤트를 듣고 있는 UI에 알림
         OnHPChangedStatic?.Invoke(heroData.currentHealth, heroData.MaxHealth);

@@ -31,8 +31,9 @@ public class HeroData : ScriptableObject
     /// </summary>
     public void Initialize()
     {
+        maxHealth = 80;
         currentHealth = maxHealth;
-        gold = 100; // 초기 자금
+        gold = 0; // 초기 자금
         Debug.Log("영웅 데이터 초기화 완료)");
     }
 
@@ -42,4 +43,9 @@ public class HeroData : ScriptableObject
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
   
+    public void AddMaxHealth(int amount)
+    {
+        maxHealth += amount; // 보너스로 영구 수치 증가
+        currentHealth = maxHealth; // 증가한 만큼 현재 체력도 가득 채워줌
+    }
 }

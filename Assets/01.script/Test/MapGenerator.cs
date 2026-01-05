@@ -7,9 +7,17 @@ public class MapGenerator : MonoBehaviour
     public GameObject nodePrefab;
     public Transform contentParent;
 
+    public GameObject linePrefab; // LinePrefab을 인스펙터에서 할당
+
     // 설정 값
-    [SerializeField] private int mapHeight = 10; // 총 10층
-    [SerializeField] private int mapWidth = 5; // 가로 너비 (0~4 칸)
+    [SerializeField] private int mapHeight = 5; // 세로 너비 조절 가능
+    [SerializeField] private int mapWidth = 2; // 가로 너비 조절 가능
+
+    private void Start()
+    {
+        // 게임이 시작되자마자 맵을 생성합니다.
+        GenerateMap();
+    }
 
     // 게임 시작 시 혹은 버튼 이벤트로 호출
     public void GenerateMap()
@@ -77,23 +85,32 @@ public class MapGenerator : MonoBehaviour
     // 시각화 및 선 그리기 준비
     void DrawMap(List<List<NodeInfo>> nodes)
     {
+        float yOffset = -300f;
+        float xOffest = 100f;
+        float xSpacing = 200f;
+        float ySpacing = 100f;
+
         foreach (var layer in nodes)
         {
             foreach (var node in layer)
             {
-                // UI 좌표 계산 (x축 주앙 정렬 보정 포함)
-                // 150과 250은 노드 간의 간격입니다. 인스펙터 디자인에 맞춰 조절하세요.
-                Vector2 pos = new Vector2(node.x * 150 - (mapWidth * 150 / 2f), node.y * 250);
+                // x축: 중앙 정렬 유지
+                // y축: yOffset을 더해 전체 위치를 아래로 내림
+                Vector2 pos = new Vector2(
+                    (node.x * xSpacing - (mapWidth * xSpacing / 2f)) + xOffest,
+                    node.y * ySpacing + yOffset
+                    );
 
                 GameObject obj = Instantiate(nodePrefab, contentParent);
                 RectTransform rect = obj.GetComponent<RectTransform>();
+
+                // 피벗과 앵커가 중앙으로(0.5, 0.5)인 경우 가장 잘 작동합니다.
                 rect.anchoredPosition = pos;
 
-                node.nodeObject = obj; // 생성된 객체를 데이터에 저장
+                node.nodeObject = obj;
 
-                // MapNode.cs의 Setup 합수 호출 (아이콘 및 이름 설정)
-                TestMapNode mapNodeScript = obj.GetComponent <TestMapNode>();
-                if(mapNodeScript != null)
+                TestMapNode mapNodeScript = obj.GetComponent<TestMapNode>();
+                if ( mapNodeScript != null )
                 {
                     mapNodeScript.SetupNode(node.nodeType, null, node.nodeType);
                 }
@@ -106,7 +123,37 @@ public class MapGenerator : MonoBehaviour
 
     void CreateLines(List<List<NodeInfo>> nodes)
     {
-        Debug.Log("모든 노드 생성 완료. 이제 노드 사이의 연결선을 그릴 차례입니다.");
-        // 여기에 LineRenderer 또는 Image를 이용한 선 생성 코드가 들어갑니다.
+        foreach (var layer in nodes)
+        {
+            foreach(var node in layer)
+            {
+                // 각 노드가 가진 '다음 노드' 리스트를 순회
+                foreach (var nextNode in node.nextNodes)
+                {
+                    DrawLine(node.nodeObject, nextNode.nodeObject);
+                }
+            }
+        }
+    }
+
+    void DrawLine(GameObject from, GameObject to)
+    {
+        // 선 생성 및 부모 설정
+        GameObject line = Instantiate(linePrefab, contentParent);
+        line.transform.SetAsFirstSibling(); // 선이 노드 아이콘 뒤로 가도록 설정
+
+        RectTransform rectFrom = from.GetComponent<RectTransform>();
+        RectTransform rectTo = to.GetComponent<RectTransform>();
+
+        // 위치 및 방향 계산
+        Vector2 dir = rectTo.anchoredPosition - rectFrom. anchoredPosition;
+        float distance = dir.magnitude;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        // 선의 속성 적용
+        RectTransform lineRect = line.GetComponent<RectTransform>();
+        lineRect.anchoredPosition = rectFrom.anchoredPosition; // 시작점 설정
+        lineRect.sizeDelta = new Vector2(lineRect.sizeDelta.x, distance); // 길이 조절
+        lineRect.rotation = Quaternion.Euler(0, 0, angle - 90f); // 각도 조절 (피벗 보정)
     }
 }

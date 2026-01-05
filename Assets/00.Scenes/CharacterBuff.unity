@@ -334,6 +334,52 @@ Transform:
   - {fileID: 1390190193721226263}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &576503579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 576503580}
+  - component: {fileID: 576503581}
+  m_Layer: 0
+  m_Name: BonusSelectorSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &576503580
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576503579}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1631711508}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &576503581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576503579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5200134b24216c141aa28b16fff219d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroData: {fileID: 11400000, guid: 123fc4819333f6a43b6d0c8172d71729, type: 2}
+  nextSceneName: Map
 --- !u!1 &645746661
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +392,6 @@ GameObject:
   - component: {fileID: 645746665}
   - component: {fileID: 645746664}
   - component: {fileID: 645746663}
-  - component: {fileID: 645746666}
   m_Layer: 5
   m_Name: BonusHPButton
   m_TagString: Untagged
@@ -418,9 +463,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 645746666}
-        m_TargetAssemblyTypeName: BonusUIHandler, Assembly-CSharp
-        m_MethodName: OnClickSelect
+      - m_Target: {fileID: 576503581}
+        m_TargetAssemblyTypeName: BonusSelector, Assembly-CSharp
+        m_MethodName: SelectHealthBonus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -468,20 +513,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645746661}
   m_CullTransparentMesh: 1
---- !u!114 &645746666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645746661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c22ca4ab3b857e48a06e8495abe967b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myItemData: {fileID: 11400000, guid: 6e26e7761533dcd4db0e25b1e6699247, type: 2}
-  nextSceneName: Map
 --- !u!1 &648263239
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,7 +525,6 @@ GameObject:
   - component: {fileID: 648263243}
   - component: {fileID: 648263242}
   - component: {fileID: 648263241}
-  - component: {fileID: 648263244}
   m_Layer: 5
   m_Name: BonusGoldButton
   m_TagString: Untagged
@@ -566,9 +596,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 648263244}
-        m_TargetAssemblyTypeName: BonusUIHandler, Assembly-CSharp
-        m_MethodName: OnClickSelect
+      - m_Target: {fileID: 576503581}
+        m_TargetAssemblyTypeName: BonusSelector, Assembly-CSharp
+        m_MethodName: SelectGoldBonus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -616,20 +646,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648263239}
   m_CullTransparentMesh: 1
---- !u!114 &648263244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648263239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c22ca4ab3b857e48a06e8495abe967b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myItemData: {fileID: 11400000, guid: ba784050b34c17c45a23be8520f1ee9e, type: 2}
-  nextSceneName: Map
 --- !u!1 &751476848
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,51 +919,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!1 &1270669620
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1270669621}
-  - component: {fileID: 1270669622}
-  m_Layer: 0
-  m_Name: GameDateSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1270669621
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1270669620}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1631711508}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1270669622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1270669620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6f6cf82c17cf5a48ac3d2a4b5ddb052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedBonus: {fileID: 0}
 --- !u!1 &1324443325
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,52 +967,6 @@ MonoBehaviour:
   nameText: {fileID: 2674561776581572405}
   hpText: {fileID: 2674561776581572404}
   goldText: {fileID: 2674561776581572403}
---- !u!1 &1480004807
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1480004808}
-  - component: {fileID: 1480004809}
-  m_Layer: 0
-  m_Name: BuffSceneManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1480004808
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480004807}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1631711508}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1480004809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480004807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fefa9159a02703f44a08f090e40c2372, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heroData: {fileID: 11400000, guid: 123fc4819333f6a43b6d0c8172d71729, type: 2}
-  hpText: {fileID: 891734178399911165}
 --- !u!1 &1486824525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,9 +1165,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1270669621}
-  - {fileID: 1480004808}
   - {fileID: 1324443326}
+  - {fileID: 576503580}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1749769617 stripped
@@ -1559,17 +1483,6 @@ Transform:
   - {fileID: 1749769617}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &891734178399911165 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 891734178770273910, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
-  m_PrefabInstance: {fileID: 1983167115}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1390190193721226263 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1390190195093573276, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}

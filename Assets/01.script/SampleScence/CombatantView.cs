@@ -44,7 +44,7 @@ public class CombatantView : MonoBehaviour
     /// 캐릭터가 피해를 입었을 때 호출됩니다. 방어력 계산 로직을 포함합니다.
     /// </summary>
     /// <param name="damageAmount">입힐 데미지 수치</param>
-    public void Damage(int damageAmount)
+    public virtual void Damage(int damageAmount)
     {
         int remainingDamage = damageAmount;
         int currentArmor = GetStatusEffectStacks(StatusEffectType.ARMOR);
@@ -69,11 +69,8 @@ public class CombatantView : MonoBehaviour
         // 남은 데미자가 있다면 체력에서 차감
         if (remainingDamage > 0)
         {
-            CurrentHealth -= damageAmount; // (Tip: 기존 코드의 damageAmount 대신 remainingDamage를 쓰는 것이 맞습니다)
-            if (CurrentHealth < 0)
-            {
-                CurrentHealth = 0;
-            }
+            CurrentHealth -= remainingDamage;
+            if (CurrentHealth < 0) CurrentHealth = 0;
         }
 
         // 피격 연출: 캐릭터를 흔들리게 함 (DoTween)
