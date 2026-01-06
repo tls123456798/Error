@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -32,6 +33,18 @@ public class CardView : MonoBehaviour
         mana.text = card.Mana.ToString();
         imageSR.sprite = card.Image;
 
+    }
+
+    /// <summary>
+    /// 원본 데이터(CardData)를 받아 시각적 요소를 셋업합니다. (상점, 덱 보기 Ui 등에서 사용)
+    /// </summary>
+    public void Setup(CardData cardData)
+    {
+        if (cardData == null) return;
+
+        // 원본 데이터를 바탕으로 런타임 카드 객체를 임시로 생성하여 기존 Setup을 재활용합니다.
+        Card runtimeCard = new Card(cardData);
+        Setup(runtimeCard);
     }
 
     #region Mouse Events (마우스 상호작용)
@@ -107,8 +120,7 @@ public class CardView : MonoBehaviour
     /// </summary>
     void OnMouseUp()
     {
-      
-        if (!Interactions.Instance.PlayerCanInteract()) return;
+        if (Card == null || !Interactions.Instance.PlayerCanInteract()) return;
 
        // 수동 타겟팅 카드 처리
         if (Card.ManualTargetEffect != null)
@@ -122,26 +134,29 @@ public class CardView : MonoBehaviour
                 PlayCardGA playCardGA = new(Card, target);
                 ActionSystem.Instance.Perform(playCardGA);
             }
-            // 드래그 드롭형 카드 처리
             else
             {
-                // 마나가 충분하고 드롭 가능한 레이어 위에 있다면 실행
-                if (ManaSystem.Instance.HasEnoughMana(Card.Mana)
-               && Physics.Raycast(transform.position, Vector3.forward, out RaycastHit hit, 10f, dropLayer))
-                {
-                    PlayCardGA playCardGA = new(Card);
-                    ActionSystem.Instance.Perform(playCardGA);
-                }
-                else
-                {
-                    // 조건 불충족 시 원래 패의 위치로 복구
-                    transform.position = dragStartPosition;
-                    transform.rotation = dragStartRotation;
-                }
-                Interactions.Instance.PlayerIsDragging = false;
+                // 타겟팅 실패 시 처리 (필요시 복구 로직 추가)
             }
         }
+        // 드래그 드롭형 카드 처리
+        else
+        {
+            // 마나가 충분하고 드롭 가능한 레이어 위에 있다면 실행
+            if(ManaSystem.Instance.HasEnoughMana(Card.Mana)
+                && Physics.Raycast(transform.position, Vector3.forward, out RaycastHit hit, 10f, dropLayer))
+            {
+                PlayCardGA playCardGA = new(Card);
+                ActionSystem.Instance.Perform(playCardGA);
+            }
+            else
+            {
+                // 조건 불충족 시 원래 패의 위치로 복구
+                transform.position = dragStartPosition;
+                transform.rotation = dragStartRotation;
+            }
+            Interactions.Instance.PlayerIsDragging = false;
+        }
     }
-
     #endregion
 }
