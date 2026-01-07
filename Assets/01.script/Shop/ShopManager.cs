@@ -1,43 +1,68 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
-    [Header("Shop Settings")]
-    [SerializeField] private int cardRemovalCost = 50; // 카드 제거 기본 비용
+    // 싱글톤 로직
+    public static ShopManager Instance { get; private set; }
 
-    /// <summary>
-    /// 카드 제거 서비스를 구매합니다.
-    /// </summary>
-    /// <param name="cardToRemove">제거할 카드 데이터</param>
-    public void BuyCardRemoval(CardData cardToRemove)
+    private void Awake()
     {
-        // 골드 체크 및 소비
-        if (HeroSystem.Instance.SpendGold(cardRemovalCost))
+        if(Instance == null)
         {
-            // 플레이어 데이터(HeroData)의 덱에서 카드 제거
-            // HeroSystem을 통해 HeroData에 접근
-            // HeroSystem.Instance.RemoveCardFromDeck(cardToRemove);
-
-            Debug.Log($" 카드가 제거되었습니다.");
-
-            // 카드 제거후 한번더 제거하려고 할때 가격이 오름
-            cardRemovalCost += 25;
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    /// <summary>
-    /// 일반 아이템이나 카드를 구매합니다.
-    /// </summary>
-    public void BuyItem(int price, CardData cardProduct)
-    {
-        if (HeroSystem.Instance.SpendGold(price))
-        {
-            // 플레이어 덱에 새 카드 추가
-            // HeroSystem.Instance.AddCardToDeck(cardProduct);
-            Debug.Log($"구매 완료");
+    [Header("Shop Settings")]
+    [SerializeField] private List<CardData> allCardsPool; // 상점에서 팔 수 있는 전체 카드
+    [SerializeField] private int cardCount = 3; // 진열할 카드의 개수
+    [SerializeField] private int basePrice = 50; // 기본 가격
 
-            //구매한 물건은 상점에서 제거 (중복 구매 방지)
-            // 해당 버튼을 비활성화 처리
+    [Header("UI References")]
+    [SerializeField] private Transform cardParent; // 카드가 배치될 부모(Grid Layout)
+    [SerializeField] private GameObject shopCardPrefab; // 아까 만든 UICardView가 포함된 프리팹
+
+    public void OpenShop()
+    {
+        GenerateStock();
+    }
+
+    private void GenerateStock()
+    {
+        // 기존 상품 제거
+        foreach(Transform child in cardParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 랜덤 카드 선별 (중복 방지를 위해 리스트를 섞음)
+        List<CardData> randomCards = allCardsPool
+            .OrderBy(g => System.Guid.NewGuid()) // 리스트를 무작위로 석기
+            .Take(cardCount) // 그 중 상위 n개 가져오기
+            .ToList();
+
+        // UI에 카드 생성
+        foreach(CardData data in randomCards)
+        {
+            GameObject obj = Instantiate(shopCardPrefab, cardParent);
+
+            // UI 초기화 로직
+            RectTransform rect = obj.GetComponent<RectTransform>();
+            if(rect != null) rect.localScale = Vector3.one;
+
+            // UICardView 스크립트를 통해 데이터와 가격 세팅
+            if(obj.TryGetComponent(out UICardView uiCardview))
+            {
+                // 랜덤한 가격 (예: 40~60골드)
+                int finalPrice = basePrice + Random.Range(-10, 11);
+                uiCardview.SetupForShop(data, finalPrice);
+            }
         }
     }
 }

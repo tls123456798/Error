@@ -19,7 +19,6 @@ public class DeckViewUI : MonoBehaviour
     public void OpenDeckView()
     {
         if (deckPanel == null) return;
-
         deckPanel.SetActive(true);
         RefreshDeckDisplay();
     }
@@ -45,28 +44,40 @@ public class DeckViewUI : MonoBehaviour
         // HeroData의 Deck 리스트를 순회하며 카드 생성
         if(heroData != null && heroData.Deck != null)
         {
+            Debug.Log($"현재 젝 카운트: {heroData.Deck.Count}"); // 로그 확인
+
             foreach(CardData cardData in heroData.Deck)
             {
+                if(cardData == null) continue;
+
                 // 프리팹 생성 및 부모 설정
                 GameObject cardObj = Instantiate(cardPrefab, contentParent);
 
+                // 스케일 및 좌표 초기화
+                RectTransform rect = cardObj.GetComponent<RectTransform>();
+                if(rect != null)
+                {
+                    rect.localScale = Vector3.one; // 스케일을 (1, 1, 1)로 고정
+                    rect.localPosition = Vector3.zero; // 위치 초기화
+                    rect.localRotation = Quaternion.identity; // 회전 초기화
+                }
 
                 // CardView 컴포넌트 설정
-                if(cardObj.TryGetComponent(out CardView cardView))
+                UICardView uiView = cardObj.GetComponent<UICardView>();
+                if(uiView != null)
                 {
-                    // 우리가 앞서 수정한 CardData를 받는 Setup 함수를 호출합니다.
-                    cardView.Setup(cardData);
+                    uiView.Setup(cardData);
+                }
+                else
+                {
+                    Debug.Log($"{cardObj.name} 프리팹에 UICardView 스크립트가 없습니다!");
                 }
             }
-        }
-        else
-        {
-            Debug.LogWarning("DeckViewUI: 표시할 HeroData나 Deck이 비어있습니다.");
         }
     }
 
     public void CloseDeckView()
     {
-        deckPanel.SetActive(false);
+        if (deckPanel != null) deckPanel.SetActive(false);
     }
 }
