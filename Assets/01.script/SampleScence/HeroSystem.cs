@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -16,6 +17,8 @@ public class HeroSystem : Singleton<HeroSystem>
     // 재화가 변경되었을 때 UI 등에 알림을 보내기 위한 이벤트
     public static event Action<int, int> OnHPChangedStatic;
     public static event Action<int> OnGoldChangedStatic;
+
+    public List<CardData> GetHeroDeck() => heroData.Deck;
 
     /// <summary>
     /// 오브젝트가 활성화될 때 실행됩니다.
@@ -120,5 +123,22 @@ public class HeroSystem : Singleton<HeroSystem>
         // 새로운 턴을 위해 카드 5장을 뽑는 액션(DrawCardsGA)을 추가합니다.
         DrawCardsGA drawCardsGA = new(5);
         ActionSystem.Instance.AddReaction(drawCardsGA);
+    }
+
+    public void AddCardToHeroDeck(CardData card)
+    {
+        if(heroData != null)
+        {
+            heroData.AddCard(card); // HeroData의 AddCard 호출
+            Debug.Log($"{card} 카드가 데겡 추가되었습니다.");
+        }
+    }
+
+    public void RemoveCardFromHeroDeck(CardData card)
+    {
+        if(heroData != null)
+        {
+            heroData.RemoveCard(card); // HeroData.cs 의 RemoveCard 호출
+        }
     }
 }

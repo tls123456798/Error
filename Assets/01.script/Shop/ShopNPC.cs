@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ShopNPC : MonoBehaviour
 {
@@ -7,6 +8,13 @@ public class ShopNPC : MonoBehaviour
     // 마우스로 NPC를 클릭했을 때 실행됩니다.
     private void OnMouseDown()
     {
+        // 마우스가 UI(버튼, 패널 등) 위에 있다면 아래 로직을 실행하지 않고 리턴합니다.
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
+        // 상점을 여는 로직
         if(shopPanel != null)
         {
             shopPanel.SetActive(true);
