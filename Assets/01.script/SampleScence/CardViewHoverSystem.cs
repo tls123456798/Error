@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 /// <summary>
@@ -9,6 +10,16 @@ public class CardViewHoverSystem : Singleton<CardViewHoverSystem>
 {
     [Header("확대 보기용 카드")]
     [SerializeField] private CardView cardViewHover; // 미리 화면에 배치해둔 확대 전용 CardView 오브젝트
+
+    private SortingGroup sortingGroup;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        // 호버용 카드에 붙어있는 SortingGroup 컴포넌트를 가져옵니다.
+        if(cardViewHover != null)
+            sortingGroup = cardViewHover.GetComponent<SortingGroup>();
+    }
 
     /// <summary>
     /// 전달받은 카드 데이터를 바탕으로 특정 위치에 확대된 카드를 표시합니다.
@@ -25,6 +36,11 @@ public class CardViewHoverSystem : Singleton<CardViewHoverSystem>
 
         // 지정된 위치로 이동 (보통 플레이어가 보기 편한 위칠 설정됨)
         cardViewHover.transform.position = position;
+
+        if(sortingGroup != null)
+        {
+            sortingGroup.sortingOrder = 200;
+        }
     }
     
     /// <summary>
@@ -35,5 +51,10 @@ public class CardViewHoverSystem : Singleton<CardViewHoverSystem>
     {
        // 확대용 카드 오브젝트를 비활성화하여 화면에서 제거
         cardViewHover.gameObject.SetActive(false);
+
+        if(sortingGroup != null)
+        {
+            sortingGroup.sortingOrder = 99;
+        }
     }
 }

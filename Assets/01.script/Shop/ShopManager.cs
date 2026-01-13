@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class ShopManager : MonoBehaviour
     [Header("Remove Card Settings")]
     [SerializeField] private int removePrice = 75; // 카드 제거 비용
     [SerializeField] private GameObject deckSelectionPanel; // 내 덱 리스트/제거 패널 부모
+    [SerializeField] private Button deckOpenbutton; // 상점 메인에 있는 '덱 열기(제거)'
 
     [Header("Remove UI")]
     [SerializeField] private Transform removeListParent; // DeckSelectionPanel 내부의 content
@@ -54,6 +56,11 @@ public class ShopManager : MonoBehaviour
         if(cardParent == null || shopCardPrefab == null) return;
 
         // 기존 상품 제거
+        foreach(Transform child in cardParent)
+        {
+            Destroy(child.gameObject);
+        }
+
         foreach(Transform child in cardParent)
         {
             Destroy(child.gameObject);
@@ -114,6 +121,13 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     public void OnClickRemoveService()
     {
+        // 카드 제거를 한번 사용 했다면 차단
+        if(isRemoveServiceUsed)
+        {
+            Debug.Log("이미 카드 제거 서비스를 이용하셨습니다. (1회 제한)");
+            return;
+        }
+
         // 상점의 물건을 숨기고 제거 하는 패널을 엽니다.
         if(shopGoods != null) shopGoods.SetActive(false);
         if(deckSelectionPanel != null) deckSelectionPanel.SetActive(true);
@@ -156,11 +170,23 @@ public class ShopManager : MonoBehaviour
     // 카드를 클릭했을 때 실제 데이터 삭제 요청
     public void RequestRemoveCard(CardData card)
     {
+        // 중복 방지
+        if (isRemoveServiceUsed) return;
+
         // 돈이 있는지 확인하고 차감
         if (HeroSystem.Instance.SpendGold(removePrice))
         {
             // 골드 소모 성공 시에만 카드 삭제
             HeroSystem.Instance.RemoveCardFromHeroDeck(card);
+
+            // 서비스 사용 완료 처리
+            isRemoveServiceUsed = true;
+
+            // 실제 삭제가 되었으므로 상점 메인 버튼 비활성화
+            if(deckOpenbutton != null)
+            {
+                deckOpenbutton.interactable = false;
+            }
 
             Debug.Log($"{card.name} 제거 완료 및 {removePrice}G 소모됨.");
 
@@ -171,5 +197,12 @@ public class ShopManager : MonoBehaviour
         {
             Debug.Log("골드가 부족하여 카드를 삭제할 수 없습니다.");
         }
+    }
+
+    // 다음 상점 NPC를 만났을 때 리셋하고 싶다면 호출
+    public void ResetRemoveService()
+    {
+        isRemoveServiceUsed = false;
+        if (deckOpenbutton != null) deckOpenbutton.interactable = true;
     }
 }

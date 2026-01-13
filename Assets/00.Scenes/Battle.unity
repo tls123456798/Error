@@ -2926,6 +2926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1514879426}
   - component: {fileID: 1514879427}
+  - component: {fileID: 1514879428}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -3003,6 +3004,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1514879428
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514879425}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 015a7c04ded57b24cb75fdebf8a29d01, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1518952851
 GameObject:
   m_ObjectHideFlags: 0
@@ -3825,13 +3848,21 @@ PrefabInstance:
       propertyPath: topHealthText
       value: 
       objectReference: {fileID: 2083262791}
+    - target: {fileID: 911006783229524543, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 911006783229524543, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1847063325973775358, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 1847063325973775358, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1847063325973775358, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3865,6 +3896,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2539040216083303134, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2abd26cb80ac49e499762ce8812af0e8, type: 3}
+    - target: {fileID: 3602444801161871524, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794262840434394019, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794262840434394019, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6879886697065899457, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
       propertyPath: m_Name
       value: HeroView
@@ -3876,10 +3923,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3602444801161871524, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
 --- !u!4 &1773867486068067064 stripped
 Transform:
@@ -3905,6 +3949,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 641987461}
     m_Modifications:
+    - target: {fileID: 4478992461587840584, guid: 8f75fd973fde31841924fef0bff4463c, type: 3}
+      propertyPath: m_SortAtRoot
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4478992461587840584, guid: 8f75fd973fde31841924fef0bff4463c, type: 3}
       propertyPath: m_SortingOrder
       value: 99

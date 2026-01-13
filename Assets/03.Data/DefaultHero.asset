@@ -23,8 +23,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f310e495787b324680f8a7d38e6ab77, type: 2}
   - {fileID: 11400000, guid: 2f310e495787b324680f8a7d38e6ab77, type: 2}
   - {fileID: 11400000, guid: 2f310e495787b324680f8a7d38e6ab77, type: 2}
-  - {fileID: 11400000, guid: 2f310e495787b324680f8a7d38e6ab77, type: 2}
-  - {fileID: 11400000, guid: 1b33f8c5c867be846bdd276cf5d522c8, type: 2}
   - {fileID: 11400000, guid: 1b33f8c5c867be846bdd276cf5d522c8, type: 2}
   - {fileID: 11400000, guid: 1b33f8c5c867be846bdd276cf5d522c8, type: 2}
   - {fileID: 11400000, guid: 1b33f8c5c867be846bdd276cf5d522c8, type: 2}
@@ -34,6 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 43043b90c29f3ed4b870422669988904, type: 2}
   - {fileID: 11400000, guid: 43043b90c29f3ed4b870422669988904, type: 2}
   - {fileID: 11400000, guid: 43043b90c29f3ed4b870422669988904, type: 2}
+  - {fileID: 11400000, guid: 86c3c313a3b779e49a669c2756710219, type: 2}
   maxHealth: 80
-  currentHealth: 80
-  gold: 1000
+  currentHealth: 0
+  gold: 0
