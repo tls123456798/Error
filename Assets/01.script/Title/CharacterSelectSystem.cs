@@ -3,13 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement; // 씬 관리를 위해 필수
 
-[System.Serializable]
-public struct CharacterInfo
-{
-    public string charName; // 캐릭터 이름
-    [TextArea] public string description; // 캐릭터 설명
-    public Sprite charSprite; // 캐릭터 배경 일러스트
-}
 
 public class CharacterSelectSystem : MonoBehaviour
 {
@@ -25,8 +18,7 @@ public class CharacterSelectSystem : MonoBehaviour
 
     [Header("Character Detail UI")]
     [SerializeField] private CanvasGroup detailInfoGroup; // 캐릭터 이름/설명이 담긴 부모 오브젝트의 CanvasGroup
-    [SerializeField] private TMP_Text nameText; // 캐릭터 이름 텍스트
-    [SerializeField] private TMP_Text descText; // 캐릭터 설명 텍스트
+    [SerializeField] private GameObject detailInfoPanel;
 
     [Header("Character Data")]
     [SerializeField] private CharacterInfo[] characters; // 캐릭터 데이터 배열
@@ -49,6 +41,16 @@ public class CharacterSelectSystem : MonoBehaviour
         {
             backgroundSR.sprite = characterSelectSprite;
         }
+
+        // 캐릭터를 아직 선택하지 않았을때 상세 정보창을 숨김
+        if(detailInfoPanel != null)
+        {
+            detailInfoPanel.SetActive(false);
+        }
+        if(detailInfoGroup != null)
+        {
+            detailInfoGroup.alpha = 0;
+        }
     }
     
     // [Cancel] 버튼 클릭 시 (캐릭터 선택 -> 메인)
@@ -67,29 +69,25 @@ public class CharacterSelectSystem : MonoBehaviour
     /// <summary>
     /// 캐릭터 아이콘 버튼을 눌렀을 때 호출 (인스펙터에서 Index 설정 필요)
     /// </summary>
-    public void SelectCharacter(int index)
+    public void SelectCharacter()
     {
-        if (index < 0 || index >= characters.Length) return;
+        if (detailInfoPanel == null) return;
 
-        // 기존에 실행 중인 정보 페이드 코루틴이 있다면 정지
+        // 일러스트와 텍스트가 담긴 패널을 활성화
+        detailInfoPanel.SetActive(true);
+
+        // 부드럽게 나타나는 페이드 효과 시작
         if(infoFadeCoroutine != null) StopCoroutine(infoFadeCoroutine);
-
-        // 정보 업데이트 및 페이드 인 시작
-        infoFadeCoroutine = StartCoroutine(FadeCharacterInfo(characters[index]));
+        infoFadeCoroutine = StartCoroutine(FadeCharacterInfo());
     }
 
-    private IEnumerator FadeCharacterInfo(CharacterInfo info)
+    private IEnumerator FadeCharacterInfo()
     {
-        // 기존 정보를 살짝 가리기 위해 알파를 0으로
+        if(detailInfoGroup == null) yield break;
+
+        float timer = 0f;
         detailInfoGroup.alpha = 0;
 
-        // 데이터 교체
-        nameText.text = info.charName;
-        descText.text = info.description;
-        if (backgroundSR != null) backgroundSR.sprite = info.charSprite;
-
-        // 페이드 인 효과
-        float timer = 0f;   
         while(timer < infoFadeDuration)
         {
             timer += Time.deltaTime;

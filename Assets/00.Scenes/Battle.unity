@@ -340,8 +340,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 72448970}
-        m_TargetAssemblyTypeName: MapNode, Assembly-CSharp
-        m_MethodName: OnNodeClick
+        m_TargetAssemblyTypeName: ReturnToMap, Assembly-CSharp
+        m_MethodName: BackToMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -398,10 +398,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 72448965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a34103e5b590b3489800c0146403c67, type: 3}
+  m_Script: {fileID: 11500000, guid: 107b76afd300b60498e78b50d37bb595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneName: Map
+  mapSceneName: Map
 --- !u!114 &77182842 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3097759440789409893, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}

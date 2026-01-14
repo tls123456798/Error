@@ -1484,7 +1484,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a34103e5b590b3489800c0146403c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nodeID: 
+  floorIndex: 0
   targetSceneName: Map
+  nextNodes: []
 --- !u!1 &824298029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,6 +1632,7 @@ GameObject:
   - component: {fileID: 849516716}
   - component: {fileID: 849516715}
   - component: {fileID: 849516714}
+  - component: {fileID: 849516717}
   m_Layer: 5
   m_Name: ExitMap
   m_TagString: Untagged
@@ -1700,9 +1704,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 808711977}
-        m_TargetAssemblyTypeName: MapNode, Assembly-CSharp
-        m_MethodName: OnNodeClick
+      - m_Target: {fileID: 849516717}
+        m_TargetAssemblyTypeName: ReturnToMap, Assembly-CSharp
+        m_MethodName: BackToMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1750,6 +1754,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849516712}
   m_CullTransparentMesh: 1
+--- !u!114 &849516717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849516712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107b76afd300b60498e78b50d37bb595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapSceneName: Map
 --- !u!114 &916544805 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9203700843486866176, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
