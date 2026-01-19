@@ -25,6 +25,8 @@ public class HeroData : ScriptableObject
     public int currentHealth;
     public int gold;
 
+    public bool isDead; // 플레이어의 사망 상태 추가
+
     /// <summary>
     /// 게임을 처음 시작할 때 데이터를 초기 상태로 되돌립니다.
     /// CharacterBuff 씬이나 타이틀 화면에서 호출하면 좋습니다.
@@ -34,13 +36,21 @@ public class HeroData : ScriptableObject
         maxHealth = 80;
         currentHealth = maxHealth;
         gold = 0; // 초기 자금
+        isDead = false; // 초기화 시 생존 상태로
         Debug.Log("영웅 데이터 초기화 완료)");
     }
 
     public void UpdateHealth(int amount)
     {
+        if(isDead) return;
+
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if(currentHealth <= 0)
+        {
+            isDead = true;
+        }
     }
   
     public void AddMaxHealth(int amount)

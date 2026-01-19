@@ -12,7 +12,7 @@ public class HeroSystem : Singleton<HeroSystem>
     [field: SerializeField] public HeroView HeroView { get; private set; }
 
     [Header("Hero Data Reference")]
-    [SerializeField] private HeroData heroData;
+    [SerializeField] public HeroData heroData;
 
     // 재화가 변경되었을 때 UI 등에 알림을 보내기 위한 이벤트
     public static event Action<int, int> OnHPChangedStatic;
@@ -60,9 +60,16 @@ public class HeroSystem : Singleton<HeroSystem>
     {
         Debug.Log($"[HeroSystem] 체력 변경 시도: {amount}");
 
+        heroData.UpdateHealth(amount);
+
         if(heroData == null)
         {
             return;
+        }
+
+        if (heroData.isDead)
+        {
+            HandleGameOver();
         }
 
         // 실제 데이터 에셋 값 수정
@@ -71,6 +78,11 @@ public class HeroSystem : Singleton<HeroSystem>
 
         // 상단 바 등 이벤트를 듣고 있는 UI에 알림
         OnHPChangedStatic?.Invoke(heroData.currentHealth, heroData.MaxHealth);
+    }
+
+    public void HandleGameOver()
+    {
+        Debug.Log("플레이어 사망 - 게임 오버 처리 시작");
     }
 
     // 골드를 추가하고 데이터 에셋에 저장합니다.

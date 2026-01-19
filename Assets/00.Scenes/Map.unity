@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a34103e5b590b3489800c0146403c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeID: 2
+  nodeID: shop01
   floorIndex: 2
   targetSceneName: Shop
   nextNodes:
@@ -700,8 +700,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentFloor: -1
-  lastNodeID: 
-  allNodes: []
+  lastNodeID: boss01
+  allNodes:
+  - {fileID: 253181553}
+  - {fileID: 1819885643}
+  - {fileID: 19925590}
+  - {fileID: 523110197}
+  - {fileID: 528498618}
 --- !u!1 &250919860
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a34103e5b590b3489800c0146403c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeID: 0
+  nodeID: battle01
   floorIndex: 0
   targetSceneName: Battle
   nextNodes:
@@ -1408,7 +1413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a34103e5b590b3489800c0146403c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeID: 3
+  nodeID: rest01
   floorIndex: 3
   targetSceneName: Rest
   nextNodes:
@@ -1559,10 +1564,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a34103e5b590b3489800c0146403c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeID: 4
+  nodeID: boss01
   floorIndex: 4
-  targetSceneName: 
-  nextNodes: []
+  targetSceneName: Boss
+  nextNodes:
+  - {fileID: 528498618}
 --- !u!114 &528498619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5207,7 +5213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a34103e5b590b3489800c0146403c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeID: 1
+  nodeID: event01
   floorIndex: 1
   targetSceneName: Selecting
   nextNodes:

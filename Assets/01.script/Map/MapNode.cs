@@ -22,7 +22,7 @@ public class MapNode : MonoBehaviour
     }
 
     // 매니저가 버튼을 켜고 끌 때 사용
-    public void SetInteratable(bool state)
+    public void SetInteractable(bool state)
     {
         if(button != null) button.interactable = state;
     }

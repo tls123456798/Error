@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +20,8 @@ public class HeroView : CombatantView
 
     public override void Damage(int damageAmount)
     {
+        if (HeroSystem.Instance.heroData.isDead) return; 
+
         int healthBefor = CurrentHealth;
 
         // 부모 클래스의 기본 데미지 로직 실행 (머리 위 텍스트 갱신, 흔들림 효과 등)
@@ -30,6 +34,27 @@ public class HeroView : CombatantView
         {
             HeroSystem.Instance.UpdateHealth(-actualDamageTaken);
         }
+
+        // 체력이 0 이 되면 사망 연출 실행
+        if(CurrentHealth <= 0)
+        {
+            StartCoroutine(HeroDieSequence());
+        }
+    }
+
+    private IEnumerator HeroDieSequence()
+    {
+        Debug.Log("플레이어 사망 연출 시작");
+
+        // 플레이어의 사망 연출 처리
+        yield return transform.DOScale(Vector3.zero, 0.25f)
+            .SetEase(Ease.InQuad).WaitForCompletion();
+
+        // 연출이 끝나면 오브젝트만 비활성화 (삭제하지 않음)
+        gameObject.SetActive(false);
+
+        // 사망 후 후속 처리 (게임 오버 UI 등) 호출
+        HeroSystem.Instance.HandleGameOver();
     }
 
     public void OnDamage(int damage)
