@@ -8,13 +8,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Hero")] // 데이터 Creat 메뉴에 'Data/Hero' 항목을 추가합니다.
 public class HeroData : ScriptableObject
 {
-    // [field: SerializeField] 방식은 변수를 private하게 보호하면서도
-    // 유니티 인스펙터 창에서 값을 수정할 수 있게 해주는 깔끔한 방식입니다.
-
     [Header("Visual & Basic Info")]
     [field: SerializeField] public string HeroName { get; private set; }
     [field: SerializeField] public Sprite Image { get; private set; }
-    [field: SerializeField] public List<CardData> Deck {  get; private set; }
+
+    // 덱 리스트 초기화 보장
+    [field: SerializeField] public List<CardData> Deck {  get; private set; } = new List<CardData>();
 
     [Header("Stats (Permanent)")]
     [SerializeField] private int maxHealth; // 인스펙터에서 설정할 최대 체력
@@ -25,6 +24,7 @@ public class HeroData : ScriptableObject
     public int currentHealth;
     public int gold;
 
+    [Header("Death Status")]
     public bool isDead; // 플레이어의 사망 상태 추가
 
     /// <summary>
@@ -37,6 +37,8 @@ public class HeroData : ScriptableObject
         currentHealth = maxHealth;
         gold = 0; // 초기 자금
         isDead = false; // 초기화 시 생존 상태로
+
+        if(Deck == null) Deck = new List<CardData>();
         Debug.Log("영웅 데이터 초기화 완료)");
     }
 
@@ -50,6 +52,7 @@ public class HeroData : ScriptableObject
         if(currentHealth <= 0)
         {
             isDead = true;
+            Debug.Log($"[HeroData] {HeroName} 사망 상태로 전환됨.");
         }
     }
   
@@ -61,7 +64,7 @@ public class HeroData : ScriptableObject
 
     public void RemoveCard(CardData card)
     {
-        if (Deck.Contains(card))
+        if (Deck != null && Deck.Contains(card))
         {
             Deck.Remove(card);
         }
@@ -69,6 +72,9 @@ public class HeroData : ScriptableObject
 
     public void AddCard(CardData card)
     {
-        Deck.Add(card);
+        if(Deck != null)
+        {
+            Deck.Add(card);
+        }
     }
 }

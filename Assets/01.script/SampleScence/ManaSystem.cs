@@ -59,7 +59,17 @@ public class ManaSystem : Singleton<ManaSystem>
     /// </summary>
     private IEnumerator RefillManaPerformer(RefillManaGA refillManaGA)
     {
-        currentMana = MAX_MANA; // 마나를 최대치로 재설정
+        if(refillManaGA.Amount <= 0)
+        {
+            // 0 이하일 경우 기존처럼 최대치로 재설정
+            currentMana = MAX_MANA;
+        }
+        else
+        {
+            // 특정 수치가 들어온 경우 해당 양만큼 추가 (최대치 초과 방지)
+            currentMana = Mathf.Clamp(currentMana + refillManaGA.Amount, 0, MAX_MANA);
+        }
+
         manaUI.UpdateManaText(currentMana); // UI 업데이트
         yield return null;
     }

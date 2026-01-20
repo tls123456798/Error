@@ -18,7 +18,7 @@ public class HeroSystem : Singleton<HeroSystem>
     public static event Action<int, int> OnHPChangedStatic;
     public static event Action<int> OnGoldChangedStatic;
 
-    public List<CardData> GetHeroDeck() => heroData.Deck;
+    public List<CardData> GetHeroDeck() => heroData != null ? heroData.Deck : null;
 
     /// <summary>
     /// 오브젝트가 활성화될 때 실행됩니다.
@@ -44,9 +44,10 @@ public class HeroSystem : Singleton<HeroSystem>
     {
         this.heroData = data; // 전달받은 데이터 에셋을 시스템에 등록
         
-        if(HeroView != null)
+        if(HeroView != null && heroData != null)
         {
             HeroView.Setup(heroData);
+            OnHPChangedStatic?.Invoke(heroData.currentHealth, heroData.MaxHealth);
         }
     }
 
@@ -58,14 +59,12 @@ public class HeroSystem : Singleton<HeroSystem>
     // 영웅의 체력을 변화시키고 데이터 에셋에 저장합니다.
     public void UpdateHealth(int amount)
     {
+        if (heroData == null) return;
         Debug.Log($"[HeroSystem] 체력 변경 시도: {amount}");
 
         heroData.UpdateHealth(amount);
 
-        if(heroData == null)
-        {
-            return;
-        }
+        OnHPChangedStatic?.Invoke(heroData.currentHealth, heroData.MaxHealth);
 
         if (heroData.isDead)
         {
@@ -73,25 +72,21 @@ public class HeroSystem : Singleton<HeroSystem>
         }
 
         // 실제 데이터 에셋 값 수정
-        heroData.currentHealth += amount;
-        heroData.currentHealth = Mathf.Clamp(heroData.currentHealth, 0, heroData.MaxHealth);
-
-        // 상단 바 등 이벤트를 듣고 있는 UI에 알림
-        OnHPChangedStatic?.Invoke(heroData.currentHealth, heroData.MaxHealth);
+        // heroData.currentHealth += amount;
+        // heroData.currentHealth = Mathf.Clamp(heroData.currentHealth, 0, heroData.MaxHealth);
     }
 
     public void HandleGameOver()
     {
         Debug.Log("플레이어 사망 - 게임 오버 처리 시작");
+        FindObjectOfType<GameOverUI>().Show();
     }
 
     // 골드를 추가하고 데이터 에셋에 저장합니다.
     public void AddGold(int amount)
     {
         if (heroData == null) return;
-
         heroData.gold += amount;
-        Debug.Log($"골드 획득: {amount} / 현재 골드: {heroData.gold}");
         OnGoldChangedStatic?.Invoke(heroData.gold);
     }
 
@@ -104,7 +99,6 @@ public class HeroSystem : Singleton<HeroSystem>
             OnGoldChangedStatic?.Invoke(heroData.gold);
             return true;
         }
-        Debug.Log("골드가 부족합니다.");
         return false;
     }
 
@@ -142,7 +136,7 @@ public class HeroSystem : Singleton<HeroSystem>
         if(heroData != null)
         {
             heroData.AddCard(card); // HeroData의 AddCard 호출
-            Debug.Log($"{card} 카드가 데겡 추가되었습니다.");
+            Debug.Log($"{card} 카드가 덱에 추가되었습니다.");
         }
     }
 
@@ -152,5 +146,10 @@ public class HeroSystem : Singleton<HeroSystem>
         {
             heroData.RemoveCard(card); // HeroData.cs 의 RemoveCard 호출
         }
+    }
+
+    public bool IsHeroDead()
+    {
+        return heroData != null && heroData.isDead;
     }
 }

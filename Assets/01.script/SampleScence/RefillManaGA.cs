@@ -6,6 +6,11 @@ using UnityEngine;
 /// </summary>
 public class RefillManaGA : GameAction
 {
-    // 현재는 특별한 매개변수가 필요하지 않으나,
-    // 나중에 '특정 수치만큼만 회복' 하는 기능이 필요하다면 여기에 Amount 변수를 추가할 수 있습니다.
+    public int Amount { get; private set; }
+
+    // 생성자: 회복량을 기본값 0으로 설정 (0일 경우 전체 회복으로 활용 가능)
+    public RefillManaGA(int amount = 0)
+    {
+        Amount = amount;
+    }
 }

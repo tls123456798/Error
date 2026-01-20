@@ -10,17 +10,23 @@ using UnityEngine.UI;
 /// </summary>
 public class HeroView : CombatantView
 {
+    private bool isDying = false; // 사망 연출이 중복으로 실행되는 것을 방지
 
     // 영웅 데이터(HeroData)를 바탕으로 뷰이 초기 상태를 설정합니다.
     public void Setup(HeroData heroData)
     {
+        // 이전 전투에서 사망했더라도 다시 나타나도록 초기화
+        isDying = false;
+        transform.localScale = Vector3.one;
+        gameObject.SetActive(true);
+
         // 부모 클래서(CombatantView)의 SetupBase를 호출하여 머리 위 HP와 이미지를 설정합니다.
         SetupBase(heroData.MaxHealth, heroData.Image);
     }
 
     public override void Damage(int damageAmount)
     {
-        if (HeroSystem.Instance.heroData.isDead) return; 
+        if (HeroSystem.Instance.IsHeroDead() || isDying) return; 
 
         int healthBefor = CurrentHealth;
 
@@ -36,7 +42,7 @@ public class HeroView : CombatantView
         }
 
         // 체력이 0 이 되면 사망 연출 실행
-        if(CurrentHealth <= 0)
+        if(CurrentHealth <= 0 && !isDying)
         {
             StartCoroutine(HeroDieSequence());
         }
@@ -44,10 +50,12 @@ public class HeroView : CombatantView
 
     private IEnumerator HeroDieSequence()
     {
+        isDying = true;
         Debug.Log("플레이어 사망 연출 시작");
 
         // 플레이어의 사망 연출 처리
-        yield return transform.DOScale(Vector3.zero, 0.25f)
+        transform.DOKill();
+        yield return transform.DOScale(Vector3.zero, 0.5f)
             .SetEase(Ease.InQuad).WaitForCompletion();
 
         // 연출이 끝나면 오브젝트만 비활성화 (삭제하지 않음)

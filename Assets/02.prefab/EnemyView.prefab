@@ -308,6 +308,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1685212931287160503, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8222698034309262111, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8677709957320905951, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
       propertyPath: m_Name
       value: CombatantViewBase
@@ -315,6 +323,10 @@ PrefabInstance:
     - target: {fileID: 8677709957320905951, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8677709957320905951, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9218618319515628234, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
       propertyPath: m_Layer
