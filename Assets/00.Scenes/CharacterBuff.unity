@@ -1055,6 +1055,8 @@ MonoBehaviour:
   nameText: {fileID: 2674561776581572405}
   hpText: {fileID: 2674561776581572404}
   goldText: {fileID: 2674561776581572403}
+  itemSlotParent: {fileID: 2674561776581572406}
+  inventoryItemPrefab: {fileID: 8553836098001384401, guid: e7f2fbe6cae1bb04f9c9fb0d5c8846ed, type: 3}
 --- !u!1 &1486824525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,6 +1680,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1716,6 +1734,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &2674561776581572406 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2083869752801115141, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+  m_PrefabInstance: {fileID: 2674561776581572402}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1082,8 +1082,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d192912585f93740aebe7ab99b9a9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HeroView>k__BackingField: {fileID: 0}
+  <HeroView>k__BackingField: {fileID: 217694469988132923, guid: 2f6a1547df67bec4bb92db9f306229ef, type: 3}
   heroData: {fileID: 11400000, guid: 123fc4819333f6a43b6d0c8172d71729, type: 2}
+  ownedItems: []
 --- !u!1 &965279538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,6 +1545,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1582,6 +1599,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1165581134 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2083869752801115141, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+  m_PrefabInstance: {fileID: 1165581130}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1249607738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1709,6 +1731,8 @@ MonoBehaviour:
   nameText: {fileID: 1165581133}
   hpText: {fileID: 1165581132}
   goldText: {fileID: 1165581131}
+  itemSlotParent: {fileID: 1165581134}
+  inventoryItemPrefab: {fileID: 8553836098001384401, guid: e7f2fbe6cae1bb04f9c9fb0d5c8846ed, type: 3}
 --- !u!1 &1515466248
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,6 +27,8 @@ public class HeroData : ScriptableObject
     [Header("Death Status")]
     public bool isDead; // 플레이어의 사망 상태 추가
 
+    public List<ItemData> savedItems = new List<ItemData>();
+
     /// <summary>
     /// 게임을 처음 시작할 때 데이터를 초기 상태로 되돌립니다.
     /// CharacterBuff 씬이나 타이틀 화면에서 호출하면 좋습니다.

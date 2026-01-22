@@ -23,12 +23,11 @@ public class UIItem : MonoBehaviour
     {
         if (HeroSystem.Instance.SpendGold(currentItemData.price))
         {
-            ApplyEffect();
-            Destroy(gameObject);
-        }
-        else
-        {
-            Debug.Log("골드가 부족합니다.");
+            // 아이템 획득 처리
+            HeroSystem.Instance.AddItem(currentItemData);
+
+            Debug.Log($"{currentItemData.itemName}을(를) 구매하여 보관함에 넣었습니다.");
+            Destroy(gameObject); // 상점 진열대에서 제거
         }
     }
 

@@ -16,11 +16,8 @@ public class ManaSystem : Singleton<ManaSystem>
     /// </summary>
     void OnEnable()
     {
-        // SpendManaGa 액션이 발생하면 SpendManaPerformer 로직을 실행하도록 연결합니다.
         ActionSystem.AttachPerformer<SpendManaGA>(SpendManaPerformer);
-        // RefillManaGA 액션이 발생하면 RefillManaPerformer 로직을 실행하도록 연결합니다.
         ActionSystem.AttachPerformer<RefillManaGA>(RefillManaPerformer);
-        // 적의 턴이 끝났을 때(POST) 마나를 회복하기 위해 이벤트를 구독합니다.
         ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
     }
 
@@ -79,7 +76,7 @@ public class ManaSystem : Singleton<ManaSystem>
     /// </summary>
     private void EnemyTurnPostReaction(EnemyTurnGA enemyTurnGA)
     {
-        RefillManaGA refillManaGA = new();
+        RefillManaGA refillManaGA = new RefillManaGA();
         ActionSystem.Instance.AddReaction(refillManaGA); // 마나 회복 액션을 큐에 추가
     }
 }

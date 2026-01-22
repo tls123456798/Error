@@ -18,7 +18,25 @@ public class HeroSystem : Singleton<HeroSystem>
     public static event Action<int, int> OnHPChangedStatic;
     public static event Action<int> OnGoldChangedStatic;
 
+    public List<ItemData> ownedItems = new List<ItemData>();
+    public const int MAX_ITEM_SLOTS = 3; // 아이템 소지 제한
+
+    public static Action<List<ItemData>> OnItemsChangedStatic; // 아이템 변경 알림 이벤트
+
     public List<CardData> GetHeroDeck() => heroData != null ? heroData.Deck : null;
+
+    protected override void Awake()
+    {
+        if(Instance != null && Instance != null)
+        {
+            Debug.Log("중복된 HeroSystem을 파괴합니다.");
+            Destroy(gameObject);
+            return;
+        }
+
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
 
     /// <summary>
     /// 오브젝트가 활성화될 때 실행됩니다.
@@ -151,5 +169,46 @@ public class HeroSystem : Singleton<HeroSystem>
     public bool IsHeroDead()
     {
         return heroData != null && heroData.isDead;
+    }
+
+    public List<ItemData> GetOwnedItems()
+    {
+        return ownedItems;
+    }
+
+    public void AddItem(ItemData data)
+    {
+        if(ownedItems.Count < MAX_ITEM_SLOTS)
+        {
+            ownedItems.Add(data);
+            // 아이템 리스트가 변했음을 구독자(TopBarUI)에게 알림
+            OnItemsChangedStatic?.Invoke(ownedItems);
+        }
+    }
+
+    public void UseItem(ItemData data)
+    {
+        if (ownedItems.Contains(data))
+        {
+            // 효과 적용 부분
+            if(data.itemType == ItemType.HP_Potion)
+            {
+                // 실제 데이터(HeroData)의 현재 체력을 증가시킴
+                heroData.currentHealth = Mathf.Min(heroData.currentHealth + data.recoveryAmount, heroData.MaxHealth);
+
+                // 변경된 HP를 UI(TopBarUI)에 알리기 위해 이벤트 호출
+                OnHPChangedStatic?.Invoke(heroData.currentHealth, heroData.MaxHealth);
+
+                Debug.Log($"HP 포션 사용: 체력 {data.recoveryAmount} 회복, 현재 체력: {heroData.currentHealth}");
+            }
+            else if(data.itemType == ItemType.Mana_Potion)
+            {
+                ActionSystem.Instance.Perform(new RefillManaGA(data.recoveryAmount));
+            }
+
+            // 소지 리스트에서 제거 및 인벤토리 UI 갱신
+            ownedItems.Remove(data);
+            OnItemsChangedStatic?.Invoke(ownedItems);
+        }
     }
 }

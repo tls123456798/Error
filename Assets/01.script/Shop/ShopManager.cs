@@ -13,6 +13,11 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private int cardCount = 3; // 진열할 카드의 개수
     [SerializeField] private int basePrice = 50; // 기본 가격
 
+    [Header("Item Settings (new)")]
+    [SerializeField] private GameObject itemPrefab; // UIItem 스크립트가 붙은 프리팹
+    [SerializeField] private Transform itemContainer; // 아이템이 배치될 부모
+    [SerializeField] private List<ItemData> shopItems; // 판매할 포션 데이터들
+
     [Header("UI References")]
     [SerializeField] private Transform cardParent; // 카드가 배치될 부모(Grid Layout)
     [SerializeField] private GameObject shopCardPrefab; // 아까 만든 UICardView가 포함된 프리팹
@@ -46,6 +51,8 @@ public class ShopManager : MonoBehaviour
         if(deckSelectionPanel != null) deckSelectionPanel.SetActive(false);
 
         GenerateStock();
+        GenerateItemStock();
+        
     }
 
     /// <summary>
@@ -87,6 +94,29 @@ public class ShopManager : MonoBehaviour
                 // 랜덤한 가격 (예: 40~60골드)
                 int finalPrice = basePrice + Random.Range(-10, 11);
                 uiCardview.SetupForShop(data, finalPrice);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 판매할 포션 아이템들을 생성하여 배치합니다.
+    /// </summary>
+    private void GenerateItemStock()
+    {
+        if(itemContainer == null || itemPrefab == null) return;
+
+        // 기존 아이템 UI 제거
+        foreach (Transform child in itemContainer) Destroy(child.gameObject);
+
+        // 등록된 아이템 데이터 리스트(shopItems)를 순회하며 생성
+        foreach(ItemData data in shopItems)
+        {
+            GameObject obj = Instantiate(itemPrefab, itemContainer);
+            obj.transform.localScale = Vector3.one;
+
+            if(obj.TryGetComponent(out UIItem uIItem))
+            {
+                uIItem.Setup(data);
             }
         }
     }

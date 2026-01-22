@@ -501,6 +501,8 @@ MonoBehaviour:
   nameText: {fileID: 374785551}
   hpText: {fileID: 1949454489}
   goldText: {fileID: 1751190762}
+  itemSlotParent: {fileID: 1180232215}
+  inventoryItemPrefab: {fileID: 8553836098001384401, guid: e7f2fbe6cae1bb04f9c9fb0d5c8846ed, type: 3}
 --- !u!1 &132214091
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,8 +701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43abb38d2acc184291bb784401b4ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentFloor: -1
-  lastNodeID: boss01
   allNodes:
   - {fileID: 253181553}
   - {fileID: 1819885643}
@@ -3121,6 +3121,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513624941062554298, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3129,6 +3145,11 @@ PrefabInstance:
 --- !u!4 &1180232214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6312997296316086961, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
+  m_PrefabInstance: {fileID: 1180232213}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1180232215 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2083869752801115141, guid: 35066c0eca1a1fe4babc2acb99fa1e7c, type: 3}
   m_PrefabInstance: {fileID: 1180232213}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1184405338
