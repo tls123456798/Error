@@ -27,7 +27,7 @@ public class HeroData : ScriptableObject
     [Header("Death Status")]
     public bool isDead; // 플레이어의 사망 상태 추가
 
-    public List<ItemData> savedItems = new List<ItemData>();
+    public List<ItemData> ownedItems = new List<ItemData>();
 
     /// <summary>
     /// 게임을 처음 시작할 때 데이터를 초기 상태로 되돌립니다.
@@ -78,5 +78,10 @@ public class HeroData : ScriptableObject
         {
             Deck.Add(card);
         }
+    }
+
+    public void ClearData()
+    {
+        ownedItems.Clear();
     }
 }

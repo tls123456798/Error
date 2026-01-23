@@ -17,7 +17,9 @@ public class IventorySlot : MonoBehaviour
     {
         if(itemData == null) return;
 
-        // HeroSystem에 아이템 사용 요청
-        HeroSystem.Instance.UseItem(itemData);
+        if(itemData != null)
+        {
+            HeroSystem.Instance.UseItem(itemData);
+        }
     }
 }

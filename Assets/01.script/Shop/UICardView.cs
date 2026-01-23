@@ -23,7 +23,7 @@ public class UICardView : MonoBehaviour, IPointerClickHandler
     // 구매 처리를 위해 현재 가격을 저장할 변수
     private int currentPrice;
 
-    public enum CardMode { ShopBuy, DeckRemove }
+    public enum CardMode { ShopBuy, DeckRemove, FreeRemove }
     public CardMode currentMode = CardMode.ShopBuy;
 
     // 기본 셋업 (덱 보기 등)
@@ -82,6 +82,13 @@ public class UICardView : MonoBehaviour, IPointerClickHandler
         {
             // 상점 매니저에게 이 카드를 삭제해달라고 요청
             ShopManager.Instance.RequestRemoveCard(CardData);
+        }
+        else if(currentMode == CardMode.FreeRemove)
+        {
+            if(CardRemovalManager.Instance != null)
+            {
+                CardRemovalManager.Instance.OnCardSelected(CardData);
+            }
         }
     }
 }

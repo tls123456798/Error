@@ -173,42 +173,61 @@ public class HeroSystem : Singleton<HeroSystem>
 
     public List<ItemData> GetOwnedItems()
     {
-        return ownedItems;
+        return heroData != null ? heroData.ownedItems : new List<ItemData>();
     }
 
     public void AddItem(ItemData data)
     {
-        if(ownedItems.Count < MAX_ITEM_SLOTS)
+        if(heroData != null && heroData.ownedItems.Count < MAX_ITEM_SLOTS)
         {
-            ownedItems.Add(data);
-            // 아이템 리스트가 변했음을 구독자(TopBarUI)에게 알림
-            OnItemsChangedStatic?.Invoke(ownedItems);
+            heroData.ownedItems.Add(data);
+            OnItemsChangedStatic?.Invoke(heroData.ownedItems);
         }
     }
 
     public void UseItem(ItemData data)
     {
-        if (ownedItems.Contains(data))
+        // 1. HeroData 에셋의 리스트에 해당 아이템이 있는지 확인
+        if (heroData != null && heroData.ownedItems.Contains(data))
         {
-            // 효과 적용 부분
-            if(data.itemType == ItemType.HP_Potion)
+            // 2. 효과 적용 (기존 로직 유지)
+            if (data.itemType == ItemType.HP_Potion)
             {
-                // 실제 데이터(HeroData)의 현재 체력을 증가시킴
                 heroData.currentHealth = Mathf.Min(heroData.currentHealth + data.recoveryAmount, heroData.MaxHealth);
-
-                // 변경된 HP를 UI(TopBarUI)에 알리기 위해 이벤트 호출
                 OnHPChangedStatic?.Invoke(heroData.currentHealth, heroData.MaxHealth);
-
-                Debug.Log($"HP 포션 사용: 체력 {data.recoveryAmount} 회복, 현재 체력: {heroData.currentHealth}");
+                Debug.Log($"[HeroSystem] HP 포션 사용: 현재 체력 {heroData.currentHealth}");
             }
-            else if(data.itemType == ItemType.Mana_Potion)
+            else if (data.itemType == ItemType.Mana_Potion)
             {
                 ActionSystem.Instance.Perform(new RefillManaGA(data.recoveryAmount));
+                Debug.Log("[HeroSystem] 마나 포션 사용");
             }
 
-            // 소지 리스트에서 제거 및 인벤토리 UI 갱신
-            ownedItems.Remove(data);
-            OnItemsChangedStatic?.Invoke(ownedItems);
+            // 3. [중요] 에셋 데이터에서 사용한 아이템 '하나'만 제거
+            // Remove는 리스트에서 해당 데이터를 찾아 '첫 번째' 것만 지웁니다.
+            heroData.ownedItems.Remove(data);
+
+            // 4. [중요] 최신화된 에셋 리스트를 UI에 다시 전달
+            // 이 이벤트가 호출되어야 TopBarUI가 에셋의 현재 상태를 보고 다시 그립니다.
+            OnItemsChangedStatic?.Invoke(heroData.ownedItems);
+
+            // 5. 에셋 파일을 강제로 저장 (에디터 환경에서 데이터 유지를 확실히 하기 위함)
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(heroData);
+#endif
         }
     }
+
+//    public void RemoveCardFromHeroDeck(CardData card)
+//    {
+//        if(heroData != null && heroData.Deck.Contains(card))
+//        {
+//            heroData.Deck.Remove(card);
+//            Debug.Log($"[HeroSystem] {card.name} 카드가 덱에서 영구 제거되었습니다.");
+
+//#if UNITY_EDITOR
+//            UnityEditor.EditorUtility.SetDirty(heroData); // 에셋 변경사항 즉시 저장
+//#endif
+//        }
+//    }
 }

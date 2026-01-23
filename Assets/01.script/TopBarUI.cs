@@ -75,7 +75,7 @@ public class TopBarUI : MonoBehaviour
         UpdateGoldDisplay(heroData.gold);
 
         // 시작 시 아이템 리스트 초기화 (HeroSystem에서 리스트를 가져옴)
-        UpdateIventoryDisplay(HeroSystem.Instance.GetOwnedItems());
+        UpdateIventoryDisplay(heroData.ownedItems);
     }
 
     /// <summary>
