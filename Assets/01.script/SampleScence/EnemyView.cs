@@ -8,7 +8,6 @@ using UnityEngine;
 public class EnemyView : CombatantView
 {
     [SerializeField] private TMP_Text attackText; // 공격력 수치를 화면에 표시할 텍스트 컴포넌트
-
     // 이 적의 현재 공격력 수치 (외부 시스템인 EnemySystem 등에서 참조 가능)
     public int AttackPower { get; set; }
 
