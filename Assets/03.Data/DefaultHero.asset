@@ -19,7 +19,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86c3c313a3b779e49a669c2756710219, type: 2}
   - {fileID: 11400000, guid: 86c3c313a3b779e49a669c2756710219, type: 2}
   - {fileID: 11400000, guid: 86c3c313a3b779e49a669c2756710219, type: 2}
-  - {fileID: 11400000, guid: 86c3c313a3b779e49a669c2756710219, type: 2}
   - {fileID: 11400000, guid: 2f310e495787b324680f8a7d38e6ab77, type: 2}
   - {fileID: 11400000, guid: 2f310e495787b324680f8a7d38e6ab77, type: 2}
   - {fileID: 11400000, guid: 2f310e495787b324680f8a7d38e6ab77, type: 2}
@@ -35,6 +34,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86c3c313a3b779e49a669c2756710219, type: 2}
   maxHealth: 88
   currentHealth: 88
-  gold: 34
+  gold: 75
   isDead: 0
   ownedItems: []
