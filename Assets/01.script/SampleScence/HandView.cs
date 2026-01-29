@@ -18,6 +18,23 @@ public class HandView : MonoBehaviour
     private readonly List<CardView> cards = new(); // 현재 손에 들고 있는 카드 리스트
 
     /// <summary>
+    /// 새로운 전투 시작 시 호출하여 시각적인 카드들을 모두 정리합니다.
+    /// </summary>
+    public void ClearHand()
+    {
+        StopAllCoroutines();
+        foreach(var cardView in cards)
+        {
+            if(cardView != null)
+            {
+                cardView.transform.DOKill(); // 진행 중인 애니메이션 중단
+                Destroy(cardView.gameObject);
+            }
+        }
+        cards.Clear();
+    }
+
+    /// <summary>
     /// 손에 새로운 카드를 추가하고 위치를 다시 정렬합니다.
     /// </summary>
     public IEnumerator AddCard(CardView cardView)
@@ -36,7 +53,10 @@ public class HandView : MonoBehaviour
 
         cards.Remove(cardView);
         // 카드가 빠진 빈자리를 채우기 위해 위치 갱신 (비동기 실행)
-        StartCoroutine(UpdateCardPositions(0.15f));
+        if(gameObject.activeInHierarchy)
+        {
+            StartCoroutine(UpdateCardPositions(0.15f));
+        }
         return cardView;
     }
     /// <summary>
@@ -45,7 +65,7 @@ public class HandView : MonoBehaviour
     private CardView GetCardView(Card card)
     {
         // LINQ를 사용하여 조건에 맞는 첫 번째 카드를 찾습니다.
-        return cards.Where(cardView => cardView.Card == card).FirstOrDefault();
+        return cards.FirstOrDefault(cardView => cardView != null && cardView.Card == card);
     }
 
     /// <summary>
@@ -54,6 +74,9 @@ public class HandView : MonoBehaviour
     /// <param name="duration">이동에 걸리는 시간</param>
     private IEnumerator UpdateCardPositions(float duration)
     {
+        // 리스트 내의 null 객체(이미 파괴된 객체)를 사전에 정리합니다.
+        cards.RemoveAll(cv => cv == null);
+
         if (cards.Count == 0) yield break;
 
         // 카드 간격 설정 (Spline의 전체 길이 1을 기준으로 0.1만틈의 간격)

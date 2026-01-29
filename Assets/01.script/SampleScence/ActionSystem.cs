@@ -158,4 +158,27 @@ public class ActionSystem : Singleton<ActionSystem>
         }
     }
 
+
+    public void ClearActions()
+    {
+        StopAllCoroutines();
+        IsPerforming = false;
+        if (reactions != null) reactions.Clear();
+        // static 변수들은 유지하되, 현재 진행 중인 흐름만 강제 종료합니다.
+    }
+    
+    public static void ResetStatics()
+    {
+        performers.Clear();
+        preSubs.Clear();
+        postSubs.Clear();
+    }
+
+    public void HardReset()
+    {
+        StopAllCoroutines();
+        IsPerforming = false;
+        reactions = new List<GameAction>(); // 현재 진행 대기열 비우기
+        ResetStatics(); // 위 2번에서 만든 static 제거 함수 호출
+    }
 }
