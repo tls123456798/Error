@@ -31,9 +31,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 43043b90c29f3ed4b870422669988904, type: 2}
   - {fileID: 11400000, guid: 43043b90c29f3ed4b870422669988904, type: 2}
   - {fileID: 11400000, guid: 43043b90c29f3ed4b870422669988904, type: 2}
-  - {fileID: 11400000, guid: 86c3c313a3b779e49a669c2756710219, type: 2}
-  maxHealth: 88
-  currentHealth: 88
-  gold: 75
+  maxHealth: 80
+  currentHealth: 80
+  gold: 0
   isDead: 0
   ownedItems: []

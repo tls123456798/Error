@@ -52,6 +52,6 @@ public class EnemyBoardView : MonoBehaviour
         yield return tween.WaitForCompletion();
 
         // 연출이 끝나면 실제 게임 오브젝트를 파괴합니다.
-        Destroy(enemyView.gameObject);
+         Destroy(enemyView.gameObject);
     }
 }
