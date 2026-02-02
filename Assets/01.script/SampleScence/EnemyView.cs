@@ -36,12 +36,4 @@ public class EnemyView : CombatantView
         // "ATK:10"과 같은 형식으로 텍스트를 구성합니다.
         attackText.text = "ATK:" + AttackPower;
     }
-
-    private void Update()
-    {
-        if(transform.localScale != Vector3.one)
-        {
-            transform.localScale = Vector3.one;
-        }
-    }
 }
