@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 135333213813899615}
   - {fileID: 5465526925104547788}
@@ -272,10 +272,13 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 891734178770273910, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
       propertyPath: m_text
       value: 'HP: 0'
       objectReference: {fileID: 0}
+=======
+>>>>>>> 39e5b4cf10bf4a5632a1289f96c5ab25865e715b
     - target: {fileID: 1313518087995020720, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -4
