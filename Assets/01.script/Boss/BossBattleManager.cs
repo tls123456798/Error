@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -7,20 +8,20 @@ public class BossBattleManager : MonoBehaviour
 {
     [Header("참조")]
     [SerializeField] private CombatantView playerView;
+    [SerializeField] private UnityEngine.UI.Button[] actionButtons;
 
     [Header("전투 설정")]
     [SerializeField] private int normalAttackDamage = 10;
     [SerializeField] private int superAttackDamage = 25;
     [SerializeField] private int defenseValue = 10;
 
-    private bool isStunned = false; // 강공격 후 스턴
+    private bool isStunned = false; // 강공격 후 스턴 상태
 
     public void OnAttackButtonClick()
     {
-        if(!CanAct()) return;
+        if (!CanAct()) return;
 
         Debug.Log("플레이어: 일반 공격 실행");
-        // AttackGA 액션을 생성하여 시스템에 전달
         ActionSystem.Instance.Perform(new AttackGA(normalAttackDamage), EndPlayerTurn);
     }
 
@@ -29,7 +30,6 @@ public class BossBattleManager : MonoBehaviour
         if (!CanAct()) return;
 
         Debug.Log("플레이어: 방어 태세 돌입");
-        // DefenseGA 액션을 생성하여 시스템에 전달
         ActionSystem.Instance.Perform(new DefenseGA(defenseValue), EndPlayerTurn);
     }
 
@@ -37,56 +37,77 @@ public class BossBattleManager : MonoBehaviour
     {
         if (!CanAct()) return;
 
-        Debug.Log("플레이어: 강력한 일격! (다음 턴 행동 불가");
+        Debug.Log("플레이어: 강력한 일격! (다음 턴 행동 불가)");
 
-        // 강공격 액션 수행 후, 콜백에서 스턴 상태를 활성화합니다.
+        // 강공격 수행 후 콜백에서 즉시 스턴을 걸고 적에게 턴을 넘깁니다.
         ActionSystem.Instance.Perform(new SuperAttackGA(superAttackDamage), () =>
         {
             isStunned = true;
-            if (playerView != null) playerView.SetStunVisual(true); // 캐릭터를 어둡게 표시
-            EndPlayerTurn(); // 강공격 후 즉시 적 턴으로 전환
+            if (playerView != null) playerView.SetStunVisual(true);
+            EndPlayerTurn();
         });
     }
 
-    // 플레이어가 현재 행동 가능한 상태인지 확인합니다.
+    /// <summary>
+    /// 버튼을 누를 수 있는 상태인지 단순히 '체크'만 합니다.
+    /// </summary>
     private bool CanAct()
     {
-        // 시스템이 이미 무언가를 수행 중이면 중복 클릭 방지
-        if(ActionSystem.Instance.IsPerforming) return false;
-
-        // 스턴 상태라면 턴을 강제로 종료 합니다.
-        if (isStunned)
-        {
-            Debug.Log("플레이어는 기절 상태입니다! 턴을 넘깁니다.");
-            isStunned = false; // 상태해제
-            EndPlayerTurn();
-            return false;
-        }
+        // 시스템이 동작 중이거나 기절 상태면 버튼 입력을 무시합니다.
+        if (ActionSystem.Instance.IsPerforming) return false;
+        if (isStunned) return false;
 
         return true;
     }
 
+    /// <summary>
+    /// 핵심: 적의 공격이 끝난 후 'ActionSystem'이 나에게 턴이 왔음을 알릴 때 호출되어야 합니다.
+    /// </summary>
     public void StartPlayerTurn()
     {
         if (isStunned)
         {
-            Debug.Log("플레이어 턴 시작: 기절 상태이므로 즉시 스킵합니다.");
-            isStunned = false;
-            if (playerView != null) playerView.SetStunVisual(false); // 캐릭터 원복
+            // 로그를 통해 현재 상태를 확실히 파악합니다.
+            Debug.Log($"[턴 체크] 현재 기절 상태인가? : {isStunned}");
 
-            // 유저가 버튼을 누를 틈도 없이 다시 적의 턴으로 넘깁니다.
-            EndPlayerTurn();
-        }
-        else
-        {
-            Debug.Log("플레이어 턴 시작: 행동 가능");
+            if (isStunned)
+            {
+                isStunned = false; // 먼저 상태를 해제합니다.
+
+                if (playerView != null)
+                    playerView.SetStunVisual(false); // 비주얼 복구
+
+                Debug.Log("<color=red>기절 감지!</color> 플레이어 턴을 건너뛰고 즉시 적의 턴을 실행합니다.");
+
+                // 유저의 입력을 기다리지 않고 '즉시' 다시 적의 턴 액션을 수행합니다.
+                // ActionSystem이 이전 동작을 완전히 끝냈는지 확인하기 위해 지연 실행을 사용합니다.
+                StopAllCoroutines();
+                StartCoroutine(AutoSkipRoutine());
+            }
+            else
+            {
+                Debug.Log("<color=green>플레이어 행동 가능</color>");
+            }
         }
     }
 
-    // 플레이어의 행동이 끝난 후 호출되어 적의 턴을 시작합니다.
+    private IEnumerator AutoSkipRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        EndPlayerTurn();
+    }
+
     private void EndPlayerTurn()
     {
-        Debug.Log("플레이어 턴 종료 -> 적 턴 시작");
+        Debug.Log("시스템: 턴 전환 중...");
         ActionSystem.Instance.Perform(new EnemyTurnGA());
+    }
+
+    private void SetButtonsActive(bool active)
+    {
+        foreach (var btn in actionButtons)
+        {
+            btn.interactable = active;
+        }
     }
 }
