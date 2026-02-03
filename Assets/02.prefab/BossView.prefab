@@ -274,7 +274,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 891734178770273910, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
       propertyPath: m_text
-      value: HP:0
+      value: 'HP: 0'
       objectReference: {fileID: 0}
     - target: {fileID: 1313518087995020720, guid: 84ddfdd44397dcb4d8c982554a9aa2d4, type: 3}
       propertyPath: m_AnchoredPosition.y

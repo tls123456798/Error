@@ -120,4 +120,22 @@ public class CombatantView : MonoBehaviour
          if (statusEffects.ContainsKey(type)) return statusEffects[type];
          else return 0;
     }
+
+    public void SetGrayScale(bool isGray)
+    {
+        if(spriteRenderer != null)
+        {
+            // 행동 불능일 때 캐릭터를 어둡게 만들어 시각적으로 표시함
+            spriteRenderer.color = isGray ? Color.gray : Color.white;
+        }
+    }
+
+    public void SetStunVisual(bool isStunned)
+    {
+        if(spriteRenderer != null)
+        {
+            // 기절 상태면 캐릭터를 어둡게(회색), 아니면 원래대로(흰색) 설정
+            spriteRenderer.color = isStunned ? new Color(0.4f, 0.4f, 0.4f) : Color.white;
+        }
+    }
 }

@@ -34,5 +34,5 @@ MonoBehaviour:
   maxHealth: 80
   currentHealth: 80
   gold: 0
-  isDead: 0
+  isDead: 1
   ownedItems: []

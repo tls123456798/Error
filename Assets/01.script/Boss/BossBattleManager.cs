@@ -5,6 +5,9 @@ using UnityEngine;
 /// </summary>
 public class BossBattleManager : MonoBehaviour
 {
+    [Header("참조")]
+    [SerializeField] private CombatantView playerView;
+
     [Header("전투 설정")]
     [SerializeField] private int normalAttackDamage = 10;
     [SerializeField] private int superAttackDamage = 25;
@@ -35,8 +38,14 @@ public class BossBattleManager : MonoBehaviour
         if (!CanAct()) return;
 
         Debug.Log("플레이어: 강력한 일격! (다음 턴 행동 불가");
-        isStunned = true; // 강공격 사용 시 스턴 예약
-        ActionSystem.Instance.Perform(new SuperAttackGA(superAttackDamage), EndPlayerTurn);
+
+        // 강공격 액션 수행 후, 콜백에서 스턴 상태를 활성화합니다.
+        ActionSystem.Instance.Perform(new SuperAttackGA(superAttackDamage), () =>
+        {
+            isStunned = true;
+            if (playerView != null) playerView.SetStunVisual(true); // 캐릭터를 어둡게 표시
+            EndPlayerTurn(); // 강공격 후 즉시 적 턴으로 전환
+        });
     }
 
     // 플레이어가 현재 행동 가능한 상태인지 확인합니다.
@@ -55,6 +64,23 @@ public class BossBattleManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void StartPlayerTurn()
+    {
+        if (isStunned)
+        {
+            Debug.Log("플레이어 턴 시작: 기절 상태이므로 즉시 스킵합니다.");
+            isStunned = false;
+            if (playerView != null) playerView.SetStunVisual(false); // 캐릭터 원복
+
+            // 유저가 버튼을 누를 틈도 없이 다시 적의 턴으로 넘깁니다.
+            EndPlayerTurn();
+        }
+        else
+        {
+            Debug.Log("플레이어 턴 시작: 행동 가능");
+        }
     }
 
     // 플레이어의 행동이 끝난 후 호출되어 적의 턴을 시작합니다.
