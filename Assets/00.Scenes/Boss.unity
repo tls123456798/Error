@@ -844,6 +844,7 @@ Transform:
   - {fileID: 1479018607}
   - {fileID: 841110972}
   - {fileID: 1405265985}
+  - {fileID: 1856492783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &449701456
@@ -858,7 +859,6 @@ GameObject:
   - component: {fileID: 449701460}
   - component: {fileID: 449701459}
   - component: {fileID: 449701458}
-  - component: {fileID: 449701461}
   m_Layer: 5
   m_Name: SuperAttackButton
   m_TagString: Untagged
@@ -930,7 +930,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 449701461}
+      - m_Target: {fileID: 1856492784}
         m_TargetAssemblyTypeName: BossBattleManager, Assembly-CSharp
         m_MethodName: OnSuperAttackButtonClick
         m_Mode: 1
@@ -980,22 +980,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449701456}
   m_CullTransparentMesh: 1
---- !u!114 &449701461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449701456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1a749138db44142b79ca1eb0e91090, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerView: {fileID: 1773867486068067065}
-  normalAttackDamage: 10
-  superAttackDamage: 25
-  defenseValue: 10
 --- !u!1 &522531799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1385,7 +1369,6 @@ GameObject:
   - component: {fileID: 929371013}
   - component: {fileID: 929371012}
   - component: {fileID: 929371011}
-  - component: {fileID: 929371014}
   m_Layer: 5
   m_Name: DeffencButton
   m_TagString: Untagged
@@ -1457,7 +1440,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 929371014}
+      - m_Target: {fileID: 1856492784}
         m_TargetAssemblyTypeName: BossBattleManager, Assembly-CSharp
         m_MethodName: OnDefenseButtonClick
         m_Mode: 1
@@ -1507,22 +1490,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 929371009}
   m_CullTransparentMesh: 1
---- !u!114 &929371014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 929371009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1a749138db44142b79ca1eb0e91090, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerView: {fileID: 1773867486068067065}
-  normalAttackDamage: 10
-  superAttackDamage: 25
-  defenseValue: 10
 --- !u!1 &936780592
 GameObject:
   m_ObjectHideFlags: 0
@@ -2238,7 +2205,6 @@ GameObject:
   - component: {fileID: 1649819135}
   - component: {fileID: 1649819134}
   - component: {fileID: 1649819133}
-  - component: {fileID: 1649819136}
   m_Layer: 5
   m_Name: AttackButton
   m_TagString: Untagged
@@ -2310,7 +2276,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1649819136}
+      - m_Target: {fileID: 1856492784}
         m_TargetAssemblyTypeName: BossBattleManager, Assembly-CSharp
         m_MethodName: OnAttackButtonClick
         m_Mode: 1
@@ -2360,22 +2326,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649819131}
   m_CullTransparentMesh: 1
---- !u!114 &1649819136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1649819131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1a749138db44142b79ca1eb0e91090, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerView: {fileID: 1773867486068067065}
-  normalAttackDamage: 10
-  superAttackDamage: 25
-  defenseValue: 10
 --- !u!1001 &1834558044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2465,6 +2415,56 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e799d49f65b9d79489625238ece16b35, type: 3}
+--- !u!1 &1856492782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1856492783}
+  - component: {fileID: 1856492784}
+  m_Layer: 0
+  m_Name: BossBattleSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1856492783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856492782}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 446891846}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1856492784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856492782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1a749138db44142b79ca1eb0e91090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerView: {fileID: 1773867486068067065}
+  superAttackButton: {fileID: 449701458}
+  normalAttackDamage: 10
+  superAttackDamage: 25
+  defenseValue: 10
+  superAttackMaxCooldown: 3
 --- !u!1 &1936507567
 GameObject:
   m_ObjectHideFlags: 0

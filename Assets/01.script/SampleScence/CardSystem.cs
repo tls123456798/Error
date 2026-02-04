@@ -132,6 +132,13 @@ public class CardSystem : Singleton<CardSystem>
     /// </summary>
     private IEnumerator PlayCardPerformer(PlayCardGA playCardGA)
     {
+        // playCardGa.Card.Data를 통해 CardData에 접근하여 설정된 소리를 재생합니다.
+        if(playCardGA.Card.UseSound != null)
+        {
+            // 카메라 위치에서 소리 발생
+            AudioSource.PlayClipAtPoint(playCardGA.Card.UseSound, Camera.main.transform.position);
+        }
+
         hand.Remove(playCardGA.Card);
         CardView cardView = handView.RemoveCard(playCardGA.Card);
 

@@ -70,11 +70,7 @@ public class BossActionSystem : MonoBehaviour
         DealDamageGA dealDamage = new(action.Damage, targets, playerView);
         ActionSystem.Instance.AddReaction(dealDamage);
 
-        // 플레이어에게 '기절' 상태이상 부여 (BossBattleManager에서 체크됨)
-        playerView.AddStatusEffect(StatusEffectType.STUN, 1);
-
         yield return new WaitForSeconds(0.5f);
-        Debug.Log("강공격 종료 - 시스템에 의해 자동으로 적 턴으로 넘어갑니다.");
     }
 
     // [핵심 추가] 적(보스)의 턴 행동 처리

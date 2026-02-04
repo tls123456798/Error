@@ -16,6 +16,9 @@ public class Card
     // 카드에 표시될 이미지(일러스트)
     public Sprite Image => data.Image;
 
+    // 효과음 데이터 제공
+    public AudioClip UseSound => data.UseSound;
+
     // 플레이어가 직접 대상을 지정해야 하는 효과 (예: 적 한 명 선택 공격)
     public Effect ManualTargetEffect => data.MaualTargetEffect;
 

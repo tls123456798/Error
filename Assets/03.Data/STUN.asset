@@ -10,32 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d08054076bbc3a44686317eb8f9e8800, type: 3}
-  m_Name: AmorUp
+  m_Name: STUN
   m_EditorClassIdentifier: 
-  <Description>k__BackingField: Add 5 amor.
-  <Mana>k__BackingField: 1
-  <Image>k__BackingField: {fileID: 21300000, guid: 8946ec217fb2e904d8bb6156c34876e7, type: 3}
-  useSound: {fileID: 0}
+  <Description>k__BackingField: 
+  <Mana>k__BackingField: 0
+  <Image>k__BackingField: {fileID: 0}
   <MaualTargetEffect>k__BackingField:
-    rid: 1261170671717974162
+    rid: 4333266677737717851
   <OtherEffects>k__BackingField:
   - <TargetMode>k__BackingField:
-      rid: 1261170674316083319
+      rid: 4333266677737717846
     <Effect>k__BackingField:
-      rid: 1261170674316083320
+      rid: 4333266677737717847
   references:
     version: 2
     RefIds:
-    - rid: 1261170671717974162
-      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
-      data:
-        statusEffectType: 0
-        stackCount: 0
-    - rid: 1261170674316083319
+    - rid: 4333266677737717846
       type: {class: HeroTM, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 1261170674316083320
+    - rid: 4333266677737717847
       type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
       data:
-        statusEffectType: 0
-        stackCount: 5
+        statusEffectType: 2
+        stackCount: 1
+    - rid: 4333266677737717851
+      type: {class: AddStatusEffectEffect, ns: , asm: Assembly-CSharp}
+      data:
+        statusEffectType: 2
+        stackCount: 1

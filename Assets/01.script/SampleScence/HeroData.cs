@@ -61,7 +61,12 @@ public class HeroData : ScriptableObject
     public void AddMaxHealth(int amount)
     {
         maxHealth += amount; // 보너스로 영구 수치 증가
-        currentHealth = maxHealth; // 증가한 만큼 현재 체력도 가득 채워줌
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+    }
+
+    public void FullHeal()
+    {
+        currentHealth = maxHealth;
     }
 
     public void RemoveCard(CardData card)

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 보스전의 버튼 입력과 플레이어 상태를 관리하는 매니저입니다.
@@ -8,14 +9,15 @@ public class BossBattleManager : MonoBehaviour
 {
     [Header("참조")]
     [SerializeField] private CombatantView playerView;
-    [SerializeField] private UnityEngine.UI.Button[] actionButtons;
+    [SerializeField] private Button superAttackButton;
 
     [Header("전투 설정")]
     [SerializeField] private int normalAttackDamage = 10;
     [SerializeField] private int superAttackDamage = 25;
     [SerializeField] private int defenseValue = 10;
+    [SerializeField] private int superAttackMaxCooldown = 3;
 
-    private bool isStunned = false; // 강공격 후 스턴 상태
+    private int currentCooldown = 0;
 
     public void OnAttackButtonClick()
     {
@@ -35,17 +37,16 @@ public class BossBattleManager : MonoBehaviour
 
     public void OnSuperAttackButtonClick()
     {
-        if (!CanAct()) return;
+        // 쿨타임 중이거나 행동 불능이면 리턴
+        if (!CanAct() || currentCooldown > 0) return;
 
-        Debug.Log("플레이어: 강력한 일격! (다음 턴 행동 불가)");
+        Debug.Log($"플레이어: 강력한 일격! (쿨타임 {superAttackMaxCooldown}턴 발생");
 
-        // 강공격 수행 후 콜백에서 즉시 스턴을 걸고 적에게 턴을 넘깁니다.
-        ActionSystem.Instance.Perform(new SuperAttackGA(superAttackDamage), () =>
-        {
-            isStunned = true;
-            if (playerView != null) playerView.SetStunVisual(true);
-            EndPlayerTurn();
-        });
+        // 강공격 사용 즉시 쿨타임 설정
+        currentCooldown = superAttackMaxCooldown;
+        UpdateUI();
+
+        ActionSystem.Instance.Perform(new SuperAttackGA(superAttackDamage), EndPlayerTurn);
     }
 
     /// <summary>
@@ -53,11 +54,7 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     private bool CanAct()
     {
-        // 시스템이 동작 중이거나 기절 상태면 버튼 입력을 무시합니다.
-        if (ActionSystem.Instance.IsPerforming) return false;
-        if (isStunned) return false;
-
-        return true;
+        return !ActionSystem.Instance.IsPerforming;
     }
 
     /// <summary>
@@ -65,49 +62,27 @@ public class BossBattleManager : MonoBehaviour
     /// </summary>
     public void StartPlayerTurn()
     {
-        if (isStunned)
+        if (currentCooldown > 0)
         {
-            // 로그를 통해 현재 상태를 확실히 파악합니다.
-            Debug.Log($"[턴 체크] 현재 기절 상태인가? : {isStunned}");
+            currentCooldown--;
+            Debug.Log($"강공격 쿨타임 감소 중... 남은 턴: {currentCooldown}");
+        }
 
-            if (isStunned)
-            {
-                isStunned = false; // 먼저 상태를 해제합니다.
+        UpdateUI();
+        Debug.Log("<color=green>플레이어 턴 시작</color>");
+    }
 
-                if (playerView != null)
-                    playerView.SetStunVisual(false); // 비주얼 복구
-
-                Debug.Log("<color=red>기절 감지!</color> 플레이어 턴을 건너뛰고 즉시 적의 턴을 실행합니다.");
-
-                // 유저의 입력을 기다리지 않고 '즉시' 다시 적의 턴 액션을 수행합니다.
-                // ActionSystem이 이전 동작을 완전히 끝냈는지 확인하기 위해 지연 실행을 사용합니다.
-                StopAllCoroutines();
-                StartCoroutine(AutoSkipRoutine());
-            }
-            else
-            {
-                Debug.Log("<color=green>플레이어 행동 가능</color>");
-            }
+    private void UpdateUI()
+    {
+        if(superAttackButton != null)
+        {
+            // 쿨타임이 남아 있으면 버튼을 비활성화 합니다.
+            superAttackButton.interactable = (currentCooldown <= 0);
         }
     }
-
-    private IEnumerator AutoSkipRoutine()
-    {
-        yield return new WaitForSeconds(0.1f);
-        EndPlayerTurn();
-    }
-
     private void EndPlayerTurn()
     {
         Debug.Log("시스템: 턴 전환 중...");
         ActionSystem.Instance.Perform(new EnemyTurnGA());
-    }
-
-    private void SetButtonsActive(bool active)
-    {
-        foreach (var btn in actionButtons)
-        {
-            btn.interactable = active;
-        }
     }
 }

@@ -15,6 +15,7 @@ MonoBehaviour:
   <Description>k__BackingField: Deal 10 Damage to all enemies.
   <Mana>k__BackingField: 1
   <Image>k__BackingField: {fileID: 21300000, guid: ece07dba400e1a44badd0e7d7d80c7cc, type: 3}
+  useSound: {fileID: 0}
   <MaualTargetEffect>k__BackingField:
     rid: 1261170671717974183
   <OtherEffects>k__BackingField:

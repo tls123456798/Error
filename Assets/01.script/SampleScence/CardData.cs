@@ -21,16 +21,13 @@ public class CardData : ScriptableObject
     // 카드 테두리 안에 표시될 캐릭터나 스킬 이미지
     [field: SerializeField] public Sprite Image { get; private set; }
 
+    [Header("사운드 설정")]
+    [Tooltip("카드를 사용할 때 재생될 효과음")]
+    [SerializeField] private AudioClip useSound;
+    public AudioClip UseSound => useSound; // 외부에서 읽기 전용으로 접근
+
     [Header("효과 설정")]
-    /// <summary>
-    /// 플레이어가 카드를 드래그하여 직접 타겟을 지어했을 때 발생하는 효과입니다.
-    /// (예: 적 한 명에게 10 데미지)
-    /// </summary>
     [field: SerializeReference, SR] public Effect MaualTargetEffect { get; private set; } = null;
 
-    /// <summary>
-    /// 카드를 낼 때 자동으로 실행되는 추가 효과들의 리스트입니다.
-    /// (예: 카드 1장 드로우, 모든 적에게 약화 부여 등 타겟팅이 자동인 효과들)
-    /// </summary>
     [field: SerializeField] public List<AutoTargetEffect> OtherEffects {  get; private set; }
 }
