@@ -15,7 +15,7 @@ MonoBehaviour:
   <Description>k__BackingField: Add 5 amor.
   <Mana>k__BackingField: 1
   <Image>k__BackingField: {fileID: 21300000, guid: 8946ec217fb2e904d8bb6156c34876e7, type: 3}
-  useSound: {fileID: 0}
+  useSound: {fileID: 8300000, guid: 31176bba0651fd94aa897879bf9dabc6, type: 3}
   <MaualTargetEffect>k__BackingField:
     rid: 1261170671717974162
   <OtherEffects>k__BackingField:

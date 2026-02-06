@@ -11,6 +11,12 @@ public class BossBattleManager : MonoBehaviour
     [SerializeField] private CombatantView playerView;
     [SerializeField] private Button superAttackButton;
 
+    [Header("사운드 설정")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip attackSound; // 일반 공격 소리
+    [SerializeField] private AudioClip defenseSound; // 방어 소리
+    [SerializeField] private AudioClip superAttackSound; // 강공격 소리
+
     [Header("전투 설정")]
     [SerializeField] private int normalAttackDamage = 10;
     [SerializeField] private int superAttackDamage = 25;
@@ -25,6 +31,9 @@ public class BossBattleManager : MonoBehaviour
 
         Debug.Log("플레이어: 일반 공격 실행");
         ActionSystem.Instance.Perform(new AttackGA(normalAttackDamage), EndPlayerTurn);
+
+        PlaySFX(attackSound);
+        Debug.Log("일반 공격 사운드 실행");
     }
 
     public void OnDefenseButtonClick()
@@ -33,6 +42,9 @@ public class BossBattleManager : MonoBehaviour
 
         Debug.Log("플레이어: 방어 태세 돌입");
         ActionSystem.Instance.Perform(new DefenseGA(defenseValue), EndPlayerTurn);
+
+        PlaySFX(defenseSound);
+        Debug.Log("방어 사운드 재생");
     }
 
     public void OnSuperAttackButtonClick()
@@ -47,6 +59,9 @@ public class BossBattleManager : MonoBehaviour
         UpdateUI();
 
         ActionSystem.Instance.Perform(new SuperAttackGA(superAttackDamage), EndPlayerTurn);
+
+        PlaySFX(superAttackSound);
+        Debug.Log("강공격 사운드 재생");
     }
 
     /// <summary>
@@ -84,5 +99,14 @@ public class BossBattleManager : MonoBehaviour
     {
         Debug.Log("시스템: 턴 전환 중...");
         ActionSystem.Instance.Perform(new EnemyTurnGA());
+    }
+
+    // 소리 재생 공통 함수
+    private void PlaySFX(AudioClip clip)
+    {
+        if(clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }

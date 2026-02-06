@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d08054076bbc3a44686317eb8f9e8800, type: 3}
-  m_Name: ArrowRain
+  m_Name: Shot
   m_EditorClassIdentifier: 
-  <Description>k__BackingField: Deal 10 Damage to all enemies.
-  <Mana>k__BackingField: 1
-  <Image>k__BackingField: {fileID: 21300000, guid: ece07dba400e1a44badd0e7d7d80c7cc, type: 3}
-  useSound: {fileID: 0}
+  <Description>k__BackingField: Deal 8 Damage to all enemies.
+  <Mana>k__BackingField: 2
+  <Image>k__BackingField: {fileID: 21300000, guid: a45ac70eada71864888a2e2761c5becc, type: 3}
+  useSound: {fileID: 8300000, guid: 63c4d751816f60845b5f22d2787c4446, type: 3}
   <MaualTargetEffect>k__BackingField:
     rid: 1261170671717974183
   <OtherEffects>k__BackingField:
@@ -29,7 +29,7 @@ MonoBehaviour:
     - rid: 1261170671717974179
       type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        damageAmount: 10
+        damageAmount: 8
     - rid: 1261170671717974180
       type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
       data: 

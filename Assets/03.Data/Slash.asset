@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d08054076bbc3a44686317eb8f9e8800, type: 3}
-  m_Name: FireBall
+  m_Name: Slash
   m_EditorClassIdentifier: 
   <Description>k__BackingField: Deal 4 damage to an enemey.
   <Mana>k__BackingField: 1
-  <Image>k__BackingField: {fileID: 21300000, guid: 24f92ac9b09d80b4992c1211e8de43a8, type: 3}
+  <Image>k__BackingField: {fileID: 21300000, guid: 0d6b2fa8be189a94987fb49be41856af, type: 3}
+  useSound: {fileID: 8300000, guid: 3efe87c8f0d078b40b15acf561d4b508, type: 3}
   <MaualTargetEffect>k__BackingField:
     rid: 1781008215342317935
   <OtherEffects>k__BackingField: []
